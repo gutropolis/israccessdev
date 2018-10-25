@@ -784,9 +784,17 @@ commander ne sont pas côte à côte.
         var id= $(this).attr('data-id'); 
         var iframeurl = "{{ base_url() }}/seatmap/guest?evtid="+id;
         $('#digitalmapframe iframe').attr('src', iframeurl);
+
+        $('#digitalmapframe').show();
+        $('.modal-backdrop').show();
+
+        
     }); 
 
-    $('#closeiframe').on('click', function(){ $('#digitalmapframe').close(); });
+    $('#closeiframe').on('click', function(){
+        $('#digitalmapframe').hide();
+        $('.modal-backdrop').hide();
+    });
 	</script>
  
 	
