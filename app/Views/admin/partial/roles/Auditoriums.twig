@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Auditoriums  -->
+
+{% set is_auditorium_add  = 'N'  %}
+{% set is_auditorium_edit = 'N'  %}
+{% set is_auditorium_del  = 'N'  %}
+{% set is_auditorium_allowed  = 'N'  %}
+
+{% set auditorium_add_val   = role_id~'_'~8~'_' ~1  %}
+{% set auditorium_edit_val  = role_id~'_'~8~'_' ~2  %}
+{% set auditorium_del_val   = role_id~'_'~8~'_' ~3  %}
+
+{% if auditorium_add_val  in assignedModulesArray %}
+{% set is_auditorium_add = 'Y'  %}
+{% set is_auditorium_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if auditorium_edit_val  in assignedModulesArray %}
+{% set is_auditorium_edit = 'Y'  %}
+{% set is_auditorium_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if auditorium_del_val  in assignedModulesArray %}
+{% set is_auditorium_del = 'Y'  %}
+{% set is_auditorium_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Auditoriums  -->
+
+

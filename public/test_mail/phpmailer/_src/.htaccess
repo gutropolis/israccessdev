@@ -1,0 +1,4 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php
+RewriteEngine On
+RewriteRule /fonctions/phpmailer/_src/ /fonctions/phpmailer/_src/index.php [L]

@@ -1,0 +1,551 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+{% block maincontent %}
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+     
+     .default_c {cursor: default !important;} 
+	 .full_row{
+	   background-color: #f4516c;
+       color: #fff;
+	 }
+	 .m-demo .m-demo__preview.m-demo__preview--badge .m-badge {
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+	font-size:18px;
+}
+.circle-tile {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.circle-tile-heading {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    color: #FFFFFF;
+    height: 80px;
+    margin: 0 auto -40px;
+    position: relative;
+    transition: all 0.3s ease-in-out 0s;
+    width: 80px;
+}
+.circle-tile-heading .fa {
+    line-height: 80px;
+}
+.circle-tile-content {
+    padding-top: 50px;
+}
+.circle-tile-number {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 0 15px;
+}
+
+.circle-tile-description {
+    text-transform: uppercase;
+}
+
+.circle-tile-footer {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease-in-out 0s;
+}
+.circle-tile-footer:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+.circle-tile-heading.dark-blue:hover {
+    background-color: #2E4154;
+}
+
+.circle-tile-heading.green:hover {
+    background-color: #138F77;
+}
+
+.circle-tile-heading.orange:hover {
+    background-color: #DA8C10;
+}
+.circle-tile-heading.blue:hover {
+    background-color: #2473A6;
+}
+.circle-tile-heading.red:hover {
+    background-color: #CF4435;
+}
+.circle-tile-heading.purple:hover {
+    background-color: #7F3D9B;
+}
+.tile-img {
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+}
+
+.dark-blue {
+    background-color: #34495E;
+}
+.green {
+    background-color: #16A085;
+}
+.blue {
+    background-color: #2980B9;
+}
+.orange {
+    background-color: #F39C12;
+}
+.accent{
+   background-color: #00c1d7;
+}
+.red {
+    background-color: #E74C3C;
+}
+.purple {
+    background-color: #8E44AD;
+}
+.dark-gray {
+    background-color: #7F8C8D;
+}
+.gray {
+    background-color: #95A5A6;
+}
+.light-gray {
+    background-color: #BDC3C7;
+}
+.yellow {
+    background-color: #F1C40F;
+}
+.text-dark-blue {
+    color: #34495E;
+}
+.text-green {
+    color: #16A085;
+}
+.text-blue {
+    color: #2980B9;
+}
+.text-orange {
+    color: #F39C12;
+}
+.text-red {
+    color: #E74C3C;
+}
+.text-purple {
+    color: #8E44AD;
+}
+.text-faded {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.tr_refunded{
+   background-color: #F39C12;
+}
+
+.m-badge.m-badge--success {
+    background-color: #34bfa3;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--orange {
+    background-color: #F39C12;
+	border-color: #fff;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--accent {
+    background-color: ##00c1d7;
+	border-color: #fff;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--danger {
+    background-color: #f4516c;
+	border-color: #f4516c;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--default {
+    background-color: #cdd2df;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--warning {
+    background-color: #f4516c;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--reserve {
+    background-color: #ffdd99;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+btn-reserve{
+  background-color: #ffdd99;
+  border-color: #ffdd99;
+    color: #fff;
+	padding: .35rem .75rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+	cursor:default;height: 29px;
+	border: 1px solid #ffdd99;background-color:  #ffdd99;color:  #fff;
+}
+
+
+.seats_tbl {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.seats_tbl td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.seats_tbl tr:nth-child(even){background-color: #f2f2f2;}
+
+.seats_tbl tr:hover {background-color: #ddd;}
+
+.seats_tbl th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #34bfa3; /*#4CAF50;*/
+    color: #ffffff;
+}
+.seat_btn{
+  width:108px !important;
+}
+/*
+.hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px;     
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff; 
+}
+.hero-widget .icon { 
+   display: block; 
+   font-size: 96px; line-height: 96px; margin-bottom: 10px; text-align: center; 
+}
+    .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
+    .hero-widget label { font-size: 17px;     color: #fff !important; }
+    .hero-widget .options { margin-top: 10px; }
+*/
+.popup_heading {
+    background-color: #45ccb1;
+    height: 48px;
+    padding: 13px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.select_option_class{
+    font-size: 15px !important;
+    color: #7b7e8a !important;
+}
+
+
+.seats_tbl_row {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.seats_tbl_row td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.seats_tbl_row tr:nth-child(even){background-color: #f2f2f2;}
+
+.seats_tbl_row tr:hover {background-color: #ddd;}
+
+.seats_tbl_row th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ffb822; /*#4CAF50;*/
+    color: #ffffff;
+}
+
+.btn.m-btn--custom {
+    padding: .55rem 1rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: Poppins;
+}
+    </style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title }} [{{ data.title|raw}}]</h3>
+    </div>
+    <div> </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon m--hide"> <i class="la la-gear"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} [{{ data.title|raw}}]</h3>
+            </div>
+          </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form" id="form_add_aud_e">
+          <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+              <div class="row">
+                <div class="form-group  col-md-12" >
+                  <label class="control-label" for="">{{ adminLang.seat_map_auditorium_seat_txt}}</label>
+				  {% if seats_list %}
+			      {{ seats_list|raw }}
+                  {% endif %}
+                  <div id="auditorium_seat_div" class="col-md-12"></div>
+                </div>
+              </div>
+			  <div class="row">
+                <div class="form-group  col-md-12" >                  
+                  <div id="auditorium_seat_div" class="col-md-12"></div>
+				  <div class="row" style="margin-top:20px">
+				</div>
+                </div>
+              </div>
+			  <div class="row" style="margin-top:10px; margin-left:1px; ">
+			  {% if(admin.is_seat_add == 'Y') %}
+               <div id="addrowSeats" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide"> <span> <i class="la la-plus"></i> <span> {{ adminLang.seat_map_add_more_txt }}</span> </span> </div>
+			   {% endif %}
+              </div>
+              <div class="m-portlet__body">
+                <div class="m-form__section m-form__section--first"> </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+			<div class="" id="mesg_div"></div>
+              <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                  <input type="hidden" name="id" id="id" value="{{ data.id }}">
+				  <input type="hidden" id="event_group_id" value="{{ data.eventgroup_id }}">
+                  <input type="hidden" name="auditorium_id" id="auditorium_id" value="{{ data.auditorium_id }}">
+				  {% if(admin.is_seat_add == 'Y' or admin.is_seat_edit == 'Y' or admin.is_seat_del == 'Y') %}
+                  <button type="button" class="btn btn-primary" onclick="return updateEventMap();">{{ adminLang.common_save_changes_txt }}</button>
+				  {% endif %}
+                  <button type="button" class="btn btn-secondary" onClick="history.back(-1)">{{ adminLang.common_cancel }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--end::Form--> 
+      </div>
+      <!--end::Portlet--> 
+      <!--begin::Portlet--> 
+      <!--end::Portlet--> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ adminLang.seat_map_reports_txt}} </h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+			<form id="saleReportFrm" method="post" >
+			  <div class="row">
+				<div class="form-group col-md-5" style="margin-left:-20px">
+				  <select class="form-control " id="category_id"  name="category_id"  style="width:100%" data-placeholder="Select Event Category" onchange="getCateId(this)">
+					<option value="">N/A</option>
+						{% if categories_list %}
+						{% for seat in categories_list %}
+						{% set selected = '' %}
+						{% if event_group_id == seat.id %}
+						{% set selected = 'selected' %}
+						{% endif %}
+						<option value="{{ seat.id }}" {{ selected }}>{{ seat.seat_category|raw }}</option>
+					    {% endfor %} 
+					    {% endif %}
+				  </select>
+				</div>
+				<div class="form-group col-md-3">
+				  <select class="form-control " id="row_id"  name="row_id"  style="width:100%"  >
+				  </select>
+				</div>
+				<div class="form-group col-md-4" style="margin-top:0px">
+				<a href="javascript:void(0);" onclick="ViewSaleReport()" class="btn btn-info">{{ adminLang.seat_map_view_report_txt }}</a>
+				  <a href="javascript:void(0);" onclick="clearSaleReport()" class="btn btn-danger">{{ adminLang.seat_map_clear_report_txt }}</a>
+				</div>
+			  </div>
+			</form>
+			 <input type="hidden" id="event_id" value="{{ data.id }}">
+			  <a href="javascript:void(0);" onclick="downloadSaleReport()" class="btn btn-info pull-right">{{ adminLang.seat_map_download_report_txt }}</a> <br>
+			  <br><br>
+			  <table class="table table-striped m-table table-bordered">
+			  <thead>
+				<tr>
+				  <th>Nom</th>
+				  <th>Prénom</th>
+				  <th>Téléphone</th>
+				  <th>Mail</th>
+				  <th>Ticket Type</th>
+				  <th> Source </th>
+				  <th> Catégorie  </th>
+				  <th> Rang </th>
+				  <th> Siège </th>
+				</tr>
+			  </thead>
+			  <tbody id="view_report_div">
+			  </tbody>
+			</table>
+        </div>
+      </div>
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+
+<!-- Model --> 
+<!-- Start Ticket Seat Model --> 
+  <div class="modal fade" id="seatLogHistoryModel" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+		<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ adminLang.common_close_txt }}</button>
+         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">{{ adminLang.seat_map_log_history_txt }}</h4>
+        </div>
+        <div class="modal-body">
+		  <h3 class="popup_heading">{{ adminLang.seat_map_changed_history_txt }} (<span id="seat_changed_data_total" ></span>)</h3>
+		  <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200">
+		  <table class="seats_tbl" id="seat_changed" style="width:99.9%">
+		  <tr>
+			<th width="8" style="text-align:center">#</th>
+			<th width="100" style="text-align:left">{{ adminLang.seat_map_customer_name_txt }}</th>
+			<th width="40" style="text-align:left">{{ adminLang.seat_map_siege_txt }} #</th>
+			<th width="100" style="text-align:left">{{ adminLang.seat_map_changed_date_txt }}</th>
+			<th width="100" style="text-align:left">{{ adminLang.seat_map_changed_by_txt }}</th>
+			<th width="150" style="text-align:left">{{ adminLang.seat_map_changed_reason_txt }}</th>
+		  </tr>
+		  <tbody id="seat_changed_data">
+		  </tbody>
+		</table>
+		</div>
+		<p>&nbsp;</p>
+		<h3 class="popup_heading">{{ adminLang.seat_map_refund_history_txt }} (<span id="seat_refund_data_total" ></span>)</h3>
+		<div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200">
+		<table class="seats_tbl" id="seat_refund" style="width:99.9%">
+		  <tr>
+			<th width="8" style="text-align:center">#</th>
+			<th width="100" style="text-align:left">{{ adminLang.seat_map_customer_name_txt }}</th>
+			<th width="40" style="text-align:left">{{ adminLang.seat_map_siege_txt }} #</th>
+			<th width="100" style="text-align:left">{{ adminLang.order_refund_date_txt }}</th>
+			<th width="200" style="text-align:left">{{ adminLang.order_refund_reason }}</th>
+		   </tr>
+			<tbody id="seat_refund_data">
+			</tbody>
+		 </table>
+         </div>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ adminLang.common_close_txt }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End Model --> 
+
+{% endblock %}
+{% block footerscripts %}
+{% include "admin/Event/lang/seat_map_lang.twig" %}  
+<script src="{{ base_url() }}/assets/admin/demo/default/custom/components/base/sweetalert2.js" type="text/javascript"></script>
+<script src="{{ base_url() }}/assets/admin/demo/default/custom/components/base/toastr.js" type="text/javascript"></script>
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/event-manual-seats.js" type="text/javascript">
+</script>
+<script>
+ 
+/*
+$(".slider_range_edit").ionRangeSlider({
+    type: "double",
+    grid: false,
+    min: 1,
+    max: 200,
+	disable: false
+});
+$('.m_date').datepicker({
+			todayHighlight:!0,
+			orientation:"bottom left",
+			format: 'dd/mm/yyyy',
+			autoclose:!0
+		 });
+		 */
+</script>
+<!--begin::Page Vendors --> 
+
+
+
+
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

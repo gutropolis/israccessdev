@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Operators  -->
+
+{% set is_operator_add  = 'N'  %}
+{% set is_operator_edit = 'N'  %}
+{% set is_operator_del  = 'N'  %}
+{% set is_operator_allowed  = 'N'  %}
+
+{% set operator_add_val   = role_id~'_'~12~'_' ~1  %}
+{% set operator_edit_val  = role_id~'_'~12~'_' ~2  %}
+{% set operator_del_val   = role_id~'_'~12~'_' ~3  %}
+
+{% if operator_add_val  in assignedModulesArray %}
+{% set is_operator_add = 'Y'  %}
+{% set is_operator_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if operator_edit_val  in assignedModulesArray %}
+{% set is_operator_edit = 'Y'  %}
+{% set is_operator_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if operator_del_val  in assignedModulesArray %}
+{% set is_operator_del = 'Y'  %}
+{% set is_operator_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Operators  -->
+
+
+

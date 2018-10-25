@@ -1,0 +1,33 @@
+
+
+<!-- BEGIN: Advertisements  -->
+
+{% set is_advertisement_add  = 'N'  %}
+{% set is_advertisement_edit = 'N'  %}
+{% set is_advertisement_del  = 'N'  %}
+
+{% set is_advertisement_allowed  = 'N'  %}
+
+{% set advertisement_add_val   = role_id~'_'~2~'_' ~1  %}
+{% set advertisement_edit_val  = role_id~'_'~2~'_' ~2  %}
+{% set advertisement_del_val   = role_id~'_'~2~'_' ~3  %}
+
+{% if advertisement_add_val  in assignedModulesArray %}
+{% set is_advertisement_add = 'Y'  %}
+{% set is_advertisement_allowed  = 'Y'  %}
+<h1>Add is here {{ is_advertisement_allowed }}</h1>
+{% endif  %}
+
+{% if advertisement_edit_val  in assignedModulesArray %}
+{% set is_advertisement_edit = 'Y'  %}
+{% set is_advertisement_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if advertisement_del_val  in assignedModulesArray %}
+{% set is_advertisement_del = 'Y'  %}
+{% set is_advertisement_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Advertisements  -->
+
+

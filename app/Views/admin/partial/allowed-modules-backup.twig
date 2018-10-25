@@ -1,0 +1,312 @@
+<!-- BEGIN: Allowed Modules  -->
+
+<h1>Allowed Modules page is included</h1>
+
+<!-- Check if the user is not Super Admin  -->
+{% set role_id = admin.adminRoleId  %}
+
+{% if (admin.adminId != 1 and admin.isProductor != 'Okay' and admin.allowed_modules > 0 ) %}
+
+{% set assignedModulesArray = admin.allowed_modules  %}	
+
+<!-- BEGIN: Dasbhoard  -->
+{% include './admin/partial/roles/Dashboard.twig' %}
+<!-- End: Dasbhoard  -->
+
+
+<!-- BEGIN: Advertisements  -->
+{% include './admin/partial/roles/Advertisements.twig' %}
+<!-- End: Advertisements  -->
+
+
+<!-- BEGIN: Cities  -->
+{% include './admin/partial/roles/Cities.twig' %}
+<!-- End: Cities  -->
+
+
+<!-- BEGIN: Currencies  -->
+{% include './admin/partial/roles/Currencies.twig' %}
+<!-- End: Currencies  -->
+
+
+<!-- BEGIN: Sliders  -->
+{% include './admin/partial/roles/Sliders.twig' %}
+<!-- End: Sliders  -->
+
+<!-- BEGIN: Category Page Slider  -->
+{% include './admin/partial/roles/Category_Page_Slider.twig' %}
+<!-- End: Category Page Slider  -->
+
+<!-- BEGIN: Categories  -->
+{% include './admin/partial/roles/Categories.twig' %}
+<!-- End: Categories  -->
+
+
+<!-- BEGIN: Auditoriums  -->
+{% include './admin/partial/roles/Auditoriums.twig' %}
+<!-- End: Auditoriums  -->
+
+<!-- BEGIN: Artists  -->
+{% include './admin/partial/roles/Artists.twig' %}
+<!-- End: Artists  -->
+
+<!-- BEGIN: Productors  -->
+{% include './admin/partial/roles/Productors.twig' %}
+<!-- End: Productors  -->
+
+<!-- BEGIN: Members  -->
+{% include './admin/partial/roles/Members.twig' %}
+<!-- End: Members  -->
+
+<!-- BEGIN: Operators  -->
+{% include './admin/partial/roles/Operators.twig' %}
+<!-- End: Operators  -->
+
+<!-- BEGIN: Sections  -->
+{% include './admin/partial/roles/Sections.twig' %}
+<!-- End: Sections  -->
+
+<!-- BEGIN: Event Groups  -->
+{% include './admin/partial/roles/Event_Groups.twig' %}
+<!-- End: Event Groups  -->
+
+
+<!-- BEGIN: Events  -->
+{% include './admin/partial/roles/Events.twig' %}
+<!-- End: Events  -->
+
+<!-- BEGIN: Dont Miss Events  -->
+{% include './admin/partial/roles/Dont_Miss_Events.twig' %}
+<!-- End: Dont Miss Events  -->
+
+<!-- BEGIN: Events of Day  -->
+{% include './admin/partial/roles/Events_of_Day.twig' %}
+<!-- End: Events of Day  -->
+
+<!-- BEGIN: Seats  -->
+{% include './admin/partial/roles/Seats.twig' %}
+<!-- End: Seats  -->
+
+
+<!-- BEGIN: Tickets  -->
+{% include './admin/partial/roles/Tickets.twig' %}
+<!-- End: Tickets  -->
+
+<!-- BEGIN: Users  -->
+{% include './admin/partial/roles/Users.twig' %}
+<!-- End: Users  -->
+
+<!-- BEGIN: Partners  -->
+{% include './admin/partial/roles/Partners.twig' %}
+<!-- End: Partners  -->
+
+<!-- BEGIN: CMS  -->
+{% include './admin/partial/roles/CMS.twig' %}
+<!-- End: CMS  -->
+
+<!-- BEGIN: Payment Types  -->
+{% include './admin/partial/roles/Payment_Types.twig' %}
+<!-- End: Payment Types  -->
+
+<!-- BEGIN: Community  -->
+{% include './admin/partial/roles/Community.twig' %}
+<!-- End: Community  -->
+
+<!-- BEGIN: Community Page  -->
+{% include './admin/partial/roles/Community_Page.twig' %}
+<!-- End: Community Page  -->
+
+<!-- BEGIN: Orders  -->
+{% include './admin/partial/roles/Orders.twig' %}
+<!-- End: Orders  -->
+
+<!-- BEGIN: Ticket Selling  -->
+{% include './admin/partial/roles/Ticket_Selling.twig' %}
+<!-- End: Ticket Selling  -->
+
+<!-- BEGIN: Settings  -->
+{% include './admin/partial/roles/Settings.twig' %}
+<!-- End: Settings  -->
+
+{% else %}
+
+
+{% set is_dashboard_view     = 'Y' %}
+
+{% set is_advertisement_add  = 'Y' %}
+{% set is_advertisement_edit = 'Y' %}
+{% set is_advertisement_del  = 'Y' %}
+
+{% set is_city_add           = 'Y' %}
+{% set is_city_edit          = 'Y' %}
+{% set is_city_del           = 'Y' %}
+
+{% set is_currency_add       = 'Y' %}
+{% set is_currency_edit      = 'Y' %}
+{% set is_currency_del       = 'Y' %}
+
+{% set is_slider_add         = 'Y' %}
+{% set is_slider_edit        = 'Y' %}
+{% set is_slider_del         = 'Y' %}
+
+{% set is_cat_page_slider_add      = 'Y' %}
+{% set is_cat_page_slider_edit     = 'Y' %}
+{% set is_cat_page_slider_del      = 'Y' %}
+
+{% set is_category_add      = 'Y' %}
+{% set is_category_edit     = 'Y' %}
+{% set is_category_del      = 'Y' %}
+
+{% set is_auditorium_add      = 'Y' %}
+{% set is_auditorium_edit     = 'Y' %}
+{% set is_auditorium_del      = 'Y' %}
+
+{% set is_artist_add      = 'Y' %}
+{% set is_artist_edit     = 'Y' %}
+{% set is_artist_del      = 'Y' %}
+
+
+{% set is_productor_add      = 'Y' %}
+{% set is_productor_edit     = 'Y' %}
+{% set is_productor_del      = 'Y' %}
+
+{% set is_member_add      = 'Y' %}
+{% set is_member_edit     = 'Y' %}
+{% set is_member_del      = 'Y' %}
+
+
+{% set is_operator_add      = 'Y' %}
+{% set is_operator_edit     = 'Y' %}
+{% set is_operator_del      = 'Y' %}
+
+{% set is_section_add  = 'Y'  %}
+{% set is_section_edit = 'Y'  %}
+{% set is_section_del  = 'Y'  %}
+
+{% set is_event_group_add  = 'Y'  %}
+{% set is_event_group_edit = 'Y'  %}
+{% set is_event_group_del  = 'Y'  %}
+
+{% set is_event_add  = 'Y'  %}
+{% set is_event_edit = 'Y'  %}
+{% set is_event_del  = 'Y'  %}
+
+{% set is_dont_miss_event_add  = 'Y'  %}
+{% set is_dont_miss_event_edit = 'Y'  %}
+{% set is_dont_miss_event_del  = 'Y'  %}
+
+{% set is_event_of_day_add  = 'Y'  %}
+{% set is_event_of_day_edit = 'Y'  %}
+{% set is_event_of_day_del  = 'Y'  %}
+
+
+{% set is_seat_add  = 'Y'  %}
+{% set is_seat_edit = 'Y'  %}
+{% set is_seat_del  = 'Y'  %}
+
+{% set is_ticket_add  = 'Y'  %}
+{% set is_ticket_edit = 'Y'  %}
+{% set is_ticket_del  = 'Y'  %}
+
+{% set is_user_add  = 'Y'  %}
+{% set is_user_edit = 'Y'  %}
+{% set is_user_del  = 'Y'  %}
+
+{% set is_partner_add  = 'Y'  %}
+{% set is_partner_edit = 'Y'  %}
+{% set is_partner_del  = 'Y'  %}
+
+{% set is_cms_view = 'Y'  %}
+
+{% set is_payment_type_add  = 'Y'  %}
+{% set is_payment_type_edit = 'Y'  %}
+{% set is_payment_type_del  = 'Y'  %}
+
+
+{% set is_community_add  = 'Y'  %}
+{% set is_community_edit = 'Y'  %}
+{% set is_community_del  = 'Y'  %}
+
+{% set is_community_page_add  = 'Y'  %}
+{% set is_community_page_edit = 'Y'  %}
+{% set is_community_page_del  = 'Y'  %}
+
+{% set is_order_view = 'Y'  %}
+
+{% set is_ticket_selling_view = 'Y'  %}
+
+{% set is_setting_edit = 'N'  %}
+{% set is_setting_view = 'N'  %}
+
+
+<!-- BEGIN: Allowed Left Menu Items  -->
+
+{% set is_dashboard_allowed = 'Y'  %}
+
+{% set is_advertisement_allowed  = 'Y'  %}
+
+{% set is_city_allowed  = 'Y'  %}
+
+{% set is_currency_allowed  = 'Y'  %}
+
+{% set is_slider_allowed  = 'Y'  %}
+
+{% set is_cat_page_slider_allowed  = 'Y'  %}
+
+{% set is_category_allowed  = 'Y'  %}
+
+{% set is_auditorium_allowed  = 'Y'  %}
+
+{% set is_artist_allowed  = 'Y'  %}
+
+{% set is_productor_allowed  = 'Y'  %}
+
+{% set is_member_allowed  = 'Y'  %}
+
+{% set is_operator_allowed  = 'Y'  %}
+
+{% set is_section_allowed  = 'Y'  %}
+
+{% set is_event_group_allowed  = 'Y'  %}
+
+{% set is_event_allowed  = 'Y'  %}
+
+{% set is_dont_miss_event_allowed  = 'Y'  %}
+
+{% set is_event_of_day_allowed  = 'Y'  %}
+
+{% set is_seat_allowed  = 'Y'  %}
+
+{% set is_ticket_allowed  = 'Y'  %}
+
+{% set is_user_allowed  = 'Y'  %}
+
+{% set is_partner_allowed  = 'Y'  %}
+
+{% set is_cms_allowed  = 'Y'  %}
+
+{% set is_payment_type_allowed  = 'Y'  %}
+
+{% set is_community_allowed  = 'Y'  %}
+
+{% set is_community_page_allowed  = 'Y'  %}
+
+{% set is_order_allowed  = 'Y'  %}
+
+{% set is_ticket_selling_allowed  = 'Y'  %}
+
+{% set is_setting_allowed  = 'Y'  %}
+
+
+
+
+<!-- END: Allowed Modules  -->
+
+{% endif %}
+
+<h1> {{ is_setting_allowed }}</h1>
+
+
+
+<!-- END: Allowed Modules  -->
+

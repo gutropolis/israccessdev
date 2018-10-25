@@ -1,0 +1,153 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+
+{% block maincontent %} 
+
+<style type="text/css">
+.has_error{
+  border-color:red !important;
+}
+.bootstrap-switch-container{
+ width:362.111px !important;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+/*
+tr:nth-child(even) {
+    background-color: #dddddd;
+}*/
+
+
+#country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:90%;position: absolute;}
+#country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+#country-list li:hover{background:#ece3d2;cursor: pointer;}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title }} </h3>
+    </div>
+    <div>  </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} </h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools" style="display:none">
+            <a href="javascript:void(0);"  class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modal-add-system-role">
+				<span>
+					<i class="la la-plus"></i>
+					<span>
+						{{ adminLang.common_add_new_txt }}
+					</span>
+				</span>
+			</a>
+			<div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+		<div class="m-portlet__body">
+		   <table>
+			  <tr>
+				<th width="10%">Module ID</th>
+				<th width="50%">Module Name</th>
+				<th width="5%">Status</th>
+			  </tr>
+			  {% if modules_list %}
+			  {% for row in modules_list %}
+			  {% set selected = false %}
+			  {% if row.status == 1 %}
+			  {% set selected = true %}
+			  {% endif %}
+			  <tr>
+				<td>{{ row.id }}</td>
+				<td><strong>{{ row.module_name }}</strong></td>
+				<td>
+				<input class="btn_changepermission" name="module_id" id="module_id" data-switch="true" type="checkbox" {% if selected %}checked="checked"{% endif %} data-on-text="Enable" data-handle-width="150" data-auid="{{ row.id }}" data-off-text="Disabled" data-off-color="danger" data-on-color="primary" data-size="medium" data-astatus="{{ row.status }}">
+				</td>
+			  </tr>
+			  {% endfor %} 
+			  {% endif %}
+			</table>
+				<!--begin: Search Form -->
+				<!--end: Search Form -->							
+		</div>
+      </div>
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footerscripts %} 
+<!--begin::Page Vendors --> 
+{% include "admin/SystemRoles/lang/lang.twig" %}
+<script src="{{ base_url() }}/assets/admin/demo/default/custom/components/forms/widgets/bootstrap-switch.js" type="text/javascript"></script> 
+<script>
+$(document).ready(function(){
+ $('.btn_changepermission').bootstrapSwitch({size : 'large', on: 'Enabled',
+      off: 'Disabled'});
+    var stopchange = false;
+    $('.btn_changepermission').on('switchChange.bootstrapSwitch', function (e, state) {
+        var obj = $(this);
+        if(stopchange === false){
+            $.ajax({
+                url: "./system_modules/updateSystemModuleStatus",
+                dataType: 'json',
+                type: "POST",
+                quietMillis: 100,
+                data: { 
+                    module_id: $(this).data('auid'),
+					status : $(this).data('astatus'),
+                },
+                success: function(result) {
+                    if(result.status) {
+                        location.reload();
+                    } else {
+                       // alert('Error:'+result['message']);
+                        if(stopchange === false){
+                            stopchange = true;
+                            obj.bootstrapSwitch('toggleState');
+                            stopchange = false;
+                        }
+                    }
+                },
+                error: function(result) {
+                    alert('Error! Unable to find this agentuser.');
+                    if(stopchange === false){
+                        stopchange = true;
+                        obj.bootstrapSwitch('toggleState');
+                        stopchange = false;
+                    }
+                }
+            });
+        }
+    }); 
+  });
+  
+  function refreshPage(){
+    location.reload();
+  }
+  </script>
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

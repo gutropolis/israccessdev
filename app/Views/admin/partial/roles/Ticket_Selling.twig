@@ -1,0 +1,14 @@
+<!-- BEGIN: Ticket Selling  -->
+
+{% set is_ticket_selling_view = 'N'  %}
+{% set is_ticket_selling_allowed  = 'N'  %}
+{% set ticket_selling_view_val  = role_id~'_'~27~'_' ~4  %}
+{% if ticket_selling_view_val  in assignedModulesArray %}
+{% set is_ticket_selling_view = 'Y'  %}
+{% set is_ticket_selling_allowed  = 'Y'  %}
+{% endif  %}
+
+
+<!-- End: Ticket Selling  -->
+
+<h1>Ticket Selling page included</h1>

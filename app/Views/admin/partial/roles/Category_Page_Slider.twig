@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Category Page Slider  -->
+
+{% set is_cat_page_slider_add  = 'N'  %}
+{% set is_cat_page_slider_edit = 'N'  %}
+{% set is_cat_page_slider_del  = 'N'  %}
+{% set is_cat_page_slider_allowed  = 'N'  %}
+
+{% set cat_page_slider_add_val   = role_id~'_'~6~'_' ~1  %}
+{% set cat_page_slider_edit_val  = role_id~'_'~6~'_' ~2  %}
+{% set cat_page_slider_del_val   = role_id~'_'~6~'_' ~3  %}
+
+{% if cat_page_slider_add_val  in assignedModulesArray %}
+{% set is_cat_page_slider_add = 'Y'  %}
+{% set is_cat_page_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if cat_page_slider_edit_val  in assignedModulesArray %}
+{% set is_cat_page_slider_edit = 'Y'  %}
+{% set is_cat_page_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if cat_page_slider_del_val  in assignedModulesArray %}
+{% set is_cat_page_slider_del = 'Y'  %}
+{% set is_cat_page_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Category Page Slider  -->
+
+

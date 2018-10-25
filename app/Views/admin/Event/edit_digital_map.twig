@@ -1,0 +1,70 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+
+
+{% block maincontent %}
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+     
+      
+    </style>
+<!-- BEGIN: Subheader -->
+<!-- END: Subheader -->
+
+<div class="m-content"> 
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon m--hide"> <i class="la la-gear"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} {{event_name}} </h3>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <!--end::Portlet--> 
+      
+      <!--begin::Portlet--> 
+      
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+{%if event_name %}
+<iframe src="{{ base_url() }}/seatmap/?evtid={{ event_id }}"  style="height:500px;width:100%;"></iframe>
+{% else %}
+<div class="container">
+  <div class="row">
+    <div class="alert alert-danger">Event not found</div>
+    </div>
+  </div>
+{%endif%}
+<!-- Modal --> 
+
+<!-- Modal --> 
+<!-- Model --> 
+
+<!-- Start Model --> 
+
+<!-- End Model --> 
+{% endblock %}
+{% block footerscripts %} 
+<script>
+var mapKey = "{{ seatmapKey }}";
+var mapVal = "{{ seatmapVal }}";
+
+</script>
+<!--begin::Page Vendors --> 
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-admin-map-crud-add.js" type="text/javascript"></script> 
+
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

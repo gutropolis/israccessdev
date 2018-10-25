@@ -1,0 +1,13 @@
+<!-- BEGIN: Orders  -->
+
+{% set is_order_view = 'N'  %}
+{% set is_order_allowed  = 'N'  %}
+{% set order_view_val  = role_id~'_'~26~'_' ~4  %}
+{% if order_view_val  in assignedModulesArray %}
+{% set is_order_view = 'Y'  %}
+{% set is_order_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Orders  -->
+
+

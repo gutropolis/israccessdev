@@ -1,0 +1,109 @@
+<style>
+/* Clearable text inputs */
+.clearable {
+	position: relative;
+	display: inline-block;
+}
+.clearable input[type=text] {
+	padding-right: 24px;
+	width: 100%;
+	box-sizing: border-box;
+}
+.clearable__clear {
+	display: none;
+	position: absolute;
+	right:0;
+	top:5px;
+	padding: 0 8px;
+	font-style: normal;
+	font-size: 1.2em;
+	user-select: none;
+	cursor: pointer;
+}
+.clearable input::-ms-clear {  /* Remove IE default X */
+ display: none;
+}
+</style>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="m-portlet m-portlet--mobile ">
+       <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> Event Sale Report </h3>
+            </div>
+          </div>
+        <div class="m-portlet__head-tools">
+          <!-- Example of download button -->
+        </div>
+      </div>
+      <div class="m-portlet__body" style="min-height:200px">
+         <form id="report_frm_changed" name="report_frm_changed" action="dashboard"  method="get" class="horizontal-form" enctype="application/x-www-form-urlencoded">
+                <table  border="0">
+                  <tr>
+                    <td style="width: 308px;">Select Event Group:<select class="form-control category_id m-select2" id="m_select3_event_dashboard"  name="event_group_id"  style="width:300px"  data-placeholder="Select Event Group">
+                        <option value="">N/A</option>
+                        
+                {% if groups %}
+                {% for row in groups %}
+				{% set selected = '' %}
+				{% if event_group_id == row.id %}
+			    {% set selected = 'selected' %}
+			    {% endif %}
+              
+                        <option value="{{ row.id }}" {{ selected }}>{{ row.title|raw }}</option>
+                        
+               {% endfor %} 
+               {% endif %}
+                  
+      
+                      </select>
+                    </td>
+                    <td>Select Event:<select class="form-control " id="event_id_sel"  name="event_id"  style="width:200px"  >
+                        <option value="0">Select Event</option>
+                        
+	       {% if options %}
+                {% for row in options %}
+				{% set selected = '' %}
+				{% set selected = '' %}
+				{% if event_id == row.id %}
+				{% set selected = 'selected' %}
+				{% endif %}
+                
+                        <option value="{{ row.id }}" {{ selected }}>{{ row.title|raw }}</option>
+                        
+               {% endfor %} 
+               {% endif %}
+           
+                      </select></td>
+                    <td style="padding-left:10px">{{ adminLang.report_start_date}}:
+                      <div class="input-group date" >
+                        <input type="text" name="report_from_date" id="report_from_date"   class="form-control" style="width:110px" readonly placeholder="Start Date"/>
+                        
+                      </div></td>
+                    <td style="padding-left:10px">{{ adminLang.report_end_date}}:
+                      <div class="input-group date" >
+                        <input type="text" name="report_to_date" id="report_to_date"   class="form-control" style="width:110px" readonly placeholder="End Date"/>
+                        
+                      </div></td>
+                    <td style="padding-left:10px"><br><!-- Example of download button -->
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-download"></i> {{ adminLang.dashboard_download_txt }} </button>
+                        <div class="dropdown-menu"> <a class="dropdown-item" href="javascript:void(0);" onClick="downloadReportGeneral()"><i class="fa fa-file-excel-o"></i>  {{ adminLang.report_general_data_txt}} </a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0);" onClick="downloadReportByEventAccount()"><i class="fa fa-file-excel-o"></i>  {{ adminLang.report_by_event_accounting_approach_txt}} </a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0);" onClick="downloadReportByEventSale()"><i class="fa fa-file-excel-o"></i>  {{ adminLang.report_by_event_sale_approach_txt}} </a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0);" onClick="downloadReportByProductor()"><i class="fa fa-file-excel-o"></i> {{ adminLang.report_by_productore_txt}} </a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0);" onClick="downloadReportCulturAccess()"><i class="fa fa-file-excel-o"></i>  {{ adminLang.report_by_culturAccess_txt}} </a> </div>
+                      </div></td>
+                  </tr>
+                </table>
+              </form>
+        <!--end: Datatable -->
+      </div>
+    </div>
+  </div>
+</div>

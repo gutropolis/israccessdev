@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Events of Day  -->
+
+{% set is_event_of_day_add  = 'N'  %}
+{% set is_event_of_day_edit = 'N'  %}
+{% set is_event_of_day_del  = 'N'  %}
+{% set is_event_of_day_allowed  = 'N'  %}
+
+{% set event_of_day_add_val   = role_id~'_'~17~'_' ~1  %}
+{% set event_of_day_edit_val  = role_id~'_'~17~'_' ~2  %}
+{% set event_of_day_del_val   = role_id~'_'~17~'_' ~3  %}
+
+{% if event_of_day_add_val  in assignedModulesArray %}
+{% set is_event_of_day_add = 'Y'  %}
+{% set is_event_of_day_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if event_of_day_edit_val  in assignedModulesArray %}
+{% set is_event_of_day_edit = 'Y'  %}
+{% set is_event_of_day_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if event_of_day_del_val  in assignedModulesArray %}
+{% set is_event_of_day_del = 'Y'  %}
+{% set is_event_of_day_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Events of Day  -->
+
+
+

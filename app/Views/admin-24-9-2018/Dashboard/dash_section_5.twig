@@ -1,0 +1,85 @@
+<style>
+/* Clearable text inputs */
+.clearable{
+  position: relative;
+  display: inline-block;
+}
+.clearable input[type=text]{
+  padding-right: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.clearable__clear{
+  display: none;
+  position: absolute;
+  right:0; top:5px;
+  padding: 0 8px;
+  font-style: normal;
+  font-size: 1.2em;
+  user-select: none;
+  cursor: pointer;
+}
+.clearable input::-ms-clear {  /* Remove IE default X */
+  display: none;
+}
+</style>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="m-portlet m-portlet--mobile ">
+      <div class="m-portlet__head" style="padding-top: 21px; padding-bottom: 5px;">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              <form id="order_frm_changed" name="order_frm_changed" action="dashboard"  method="get" class="horizontal-form" enctype="application/x-www-form-urlencoded">
+                <table width="100%" border="0">
+                  <tr>
+                    <td>{{ adminLang.report_start_date}}:
+                      <div class="input-group date" >
+                        <input type="text" name="from_date" id="from_date" value="{{ from_date_val }}"  class="form-control" style="width:110px" readonly placeholder="Start Date" />
+                        <div class="input-group-append"> <span class="input-group-text"> <i class="la la-calendar"></i> </span> </div>
+                      </div></td>
+                    <td>{{ adminLang.report_end_date}}:
+                      <div class="input-group date" >
+                        <input type="text" name="to_date" id="to_date" value="{{ to_date_val }}"  class="form-control" style="width:110px" readonly placeholder="End Date"/>
+						 
+                        <div class="input-group-append"> <span class="input-group-text"> <i class="la la-calendar"></i> </span> </div>
+                      </div></td>
+                    <td>Search Users:<br>
+					<span class="clearable">
+                      <input type="text" onsearch="OnSearch(this)" name="suggested_names" id="suggested_names" class="form-control" style="margin-top:1px" value="{{ suggested_names }}" />
+					  <i class="clearable__clear">&times;</i>
+                      </span>
+					  <div id="hide_or_show_search_results_box" style="margin-top:0px;margin-left:0px;float:left; width:210px;background:#F6F6F6; border: 1px solid #E1E1E1;display:;position: absolute; display:none;" align="left"><span style="text-align:left; " id="response_brought"></span></div>
+					  <input type="hidden" name="suggested_name_id" id="suggested_name_id" value="{{ customer_id }}" >
+					  <br clear="all">
+					  
+					  
+					  </td>
+                    <td><br>
+                      <a href="javascript:void(0);" onclick="SearchGeneralSaleReport()" class="btn btn-info">Search</a> <a href="javascript:void(0);" onclick="reloadDashboard()" class="btn btn-danger">Clear</a> <a  class="btn btn-success m-btn m-btn--icon m-btn--icon-only" href="javascript:void(0);" onclick="downloadPDF()" style="display:none"><i class="fa fa-file-pdf-o"></i> </a> <a class="btn btn-success m-btn m-btn--icon m-btn--icon-only"href="javascript:void(0);" onclick="downloadCSV()"><i class="fa fa-file-excel-o"></i> </a></td>
+                  </tr>
+                </table>
+              </form>
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools"> 
+          
+          <!-- Example of download button --> 
+          
+        </div>
+      </div>
+      <div class="m-portlet__body" style="min-height:200px"> 
+        <!--begin: Datatable --> 
+        {% if(is_order_searched == 1) %}
+		  {% if(customer_id < 1)%}
+        <div class="m_datatable_orders_list"></div>
+		{% else %}
+		<div class="m_datatable_orders_list_cust"></div>
+		{% endif %}
+        {% endif %} 
+        <!--end: Datatable --> 
+      </div>
+    </div>
+  </div>
+</div>

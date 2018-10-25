@@ -1,0 +1,63 @@
+<!--Begin::Section-->
+
+<div class="row" style="margin-top:-180px">
+ 
+  <div class="col-xl-12"> 
+    <!--begin:: Widgets/Audit Log-->
+    <div class="m-portlet m-portlet--full-height ">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text"> {{ adminLang.dashboard_order_log_txt }} </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+            <li class="nav-item m-tabs__item"> <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab"> {{ adminLang.dasbhoard_today_txt }} </a> </li>
+            <li class="nav-item m-tabs__item"> <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab"> {{ adminLang.dashboard_week_txt }} </a> </li>
+            <li class="nav-item m-tabs__item"> <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab"> {{ adminLang.dashboard_month_txt}} </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="m_widget4_tab1_content">
+            <div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+              <div class="m-list-timeline m-list-timeline--skin-light">
+                <div class="m-list-timeline__items"> {% if section_3_today_orders %}
+                  {% for row in section_3_today_orders %}
+                  <div class="m-list-timeline__item"> <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span> <span class="m-list-timeline__text"> {{ row.customer_name|raw }} <span class="m-badge m-badge--info m-badge--wide"> {{ row.order_amount }} </span> </span> <span class="m-list-timeline__time"> {{ row.order_time|raw }} </span> </div>
+                  {% endfor %} 
+                  {% else %} <span class="m-badge m-badge--danger m-badge--wide"> {{ adminLang.no_data_found_txt }} </span> {% endif %} </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="m_widget4_tab2_content">
+            <div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+              <div class="m-list-timeline m-list-timeline--skin-light">
+                <div class="m-list-timeline__items"> {% if section_3_this_week_orders %}
+                  {% for row in section_3_this_week_orders %}
+                  <div class="m-list-timeline__item"> <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span> <span class="m-list-timeline__text"> {{ row.customer_name|raw }} <span class="m-badge m-badge--info m-badge--wide"> {{ row.order_amount }} </span> </span> <span class="m-list-timeline__time"> {{ row.order_time|raw }} </span> </div>
+                  {% endfor %} 
+                  {% else %} <span class="m-badge m-badge--danger m-badge--wide"> {{ adminLang.no_data_found_txt }} </span> {% endif %} </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="m_widget4_tab3_content">
+            <div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+              <div class="m-list-timeline m-list-timeline--skin-light">
+                <div class="m-list-timeline__items"> {% if section_3_this_month_orders %}
+                  {% for row in section_3_this_month_orders %}
+                  <div class="m-list-timeline__item"> <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span> <span class="m-list-timeline__text"> {{ row.customer_name|raw }} <span class="m-badge m-badge--info m-badge--wide"> {{ row.order_amount }} </span> </span> <span class="m-list-timeline__time"> {{ row.order_time|raw }} </span> </div>
+                  {% endfor %} 
+                  {% else %} <span class="m-badge m-badge--danger m-badge--wide"> {{ adminLang.no_data_found_txt }} </span> {% endif %} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end:: Widgets/Audit Log--> 
+  </div>
+</div>
+<!--End::Section--> 

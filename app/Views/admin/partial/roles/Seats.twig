@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Seats  -->
+
+{% set is_seat_add  = 'N'  %}
+{% set is_seat_edit = 'N'  %}
+{% set is_seat_del  = 'N'  %}
+{% set is_seat_allowed  = 'N'  %}
+
+{% set seat_add_val   = role_id~'_'~18~'_' ~1  %}
+{% set seat_edit_val  = role_id~'_'~18~'_' ~2  %}
+{% set seat_del_val   = role_id~'_'~18~'_' ~3  %}
+
+{% if seat_add_val  in assignedModulesArray %}
+{% set is_seat_add = 'Y'  %}
+{% set is_seat_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if seat_edit_val  in assignedModulesArray %}
+{% set is_seat_edit = 'Y'  %}
+{% set is_seat_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if seat_del_val  in assignedModulesArray %}
+{% set is_seat_del = 'Y'  %}
+{% set is_seat_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Seats  -->
+
+<h1>Seats page included</h1>
+

@@ -1,0 +1,10 @@
+#RewriteEngine On
+
+#RewriteRule ^(.*)$ israel-access.com/$1 [L]
+#RewriteRule .? http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteEngine On
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteRule ^$ public/ [L]

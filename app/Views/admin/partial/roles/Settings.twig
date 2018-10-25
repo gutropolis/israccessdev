@@ -1,0 +1,25 @@
+<!-- BEGIN: Settings  -->
+
+
+{% set is_setting_edit = 'N'  %}
+{% set is_setting_view = 'N'  %}
+{% set is_setting_allowed  = 'N'  %}
+
+{% set setting_edit_val  = role_id~'_'~28~'_' ~2  %}
+{% set setting_view_val  = role_id~'_'~28~'_' ~4  %}
+
+{% if setting_edit_val  in assignedModulesArray %}
+{% set is_setting_edit = 'Y'  %}
+{% set is_setting_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if setting_view_val  in assignedModulesArray %}
+{% set is_setting_view = 'Y'  %}
+{% set is_setting_allowed  = 'Y'  %}
+{% endif  %}
+
+
+
+<!-- End: Settings  -->
+
+<h1>Settings page included</h1>

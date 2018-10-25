@@ -1,0 +1,21 @@
+{% extends "public/layouts/layout-public.twig" %}
+{% block seotag %}
+	<title>{{metaTitle}}</title>
+    <meta name="description" content="{{metaDescription}}">
+    <style type="text/css">
+    	.left-side { display:none;}
+    	.right-side { width:100%!important;}
+    </style>
+{% endblock %} 
+{% block maincontent %} 
+
+
+
+<h1>Digital Map</h1>
+
+<iframe src="{{ base_url() }}/seatmap/guest?evtid={{ event_id }}"  style="height:500px;width:100%;"></iframe>
+
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 
+

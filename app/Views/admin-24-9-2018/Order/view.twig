@@ -1,0 +1,664 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+{% block maincontent %}
+<style>     
+   .invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none !important;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none !important;
+}
+.table > tbody > tr > .thick-line {
+    border-top: 1px solid !important;
+}
+.table td, .table th {
+    padding: 0.45rem !important;
+    vertical-align: top !important;
+    border-top: 1px solid #f4f5f8 !important;
+}
+.panel-default {
+    border-color: #ddd;
+}
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
+.panel-heading {
+    padding: 4px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    padding-top: 12px;
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+} 
+.panel-body {
+    padding: 15px;
+}
+ .m-demo .m-demo__preview.m-demo__preview--badge .m-badge {
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+	font-size:18px;
+}
+.circle-tile {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.circle-tile-heading {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    color: #FFFFFF;
+    height: 80px;
+    margin: 0 auto -40px;
+    position: relative;
+    transition: all 0.3s ease-in-out 0s;
+    width: 80px;
+}
+.circle-tile-heading .fa {
+    line-height: 80px;
+}
+.circle-tile-content {
+    padding-top: 50px;
+}
+.circle-tile-number {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 0 15px;
+}
+.circle-tile-description {
+    text-transform: uppercase;
+}
+.circle-tile-footer {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease-in-out 0s;
+}
+.circle-tile-footer:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+.circle-tile-heading.dark-blue:hover {
+    background-color: #2E4154;
+}
+.circle-tile-heading.green:hover {
+    background-color: #138F77;
+}
+.circle-tile-heading.orange:hover {
+    background-color: #DA8C10;
+}
+.circle-tile-heading.blue:hover {
+    background-color: #2473A6;
+}
+.circle-tile-heading.red:hover {
+    background-color: #CF4435;
+}
+.circle-tile-heading.purple:hover {
+    background-color: #7F3D9B;
+}
+.tile-img {
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+}
+
+.dark-blue {
+    background-color: #34495E;
+}
+.green {
+    background-color: #16A085;
+}
+.blue {
+    background-color: #2980B9;
+}
+.orange {
+    background-color: #F39C12;
+}
+.red {
+    background-color: #E74C3C;
+}
+.purple {
+    background-color: #8E44AD;
+}
+.dark-gray {
+    background-color: #7F8C8D;
+}
+.gray {
+    background-color: #95A5A6;
+}
+.light-gray {
+    background-color: #BDC3C7;
+}
+.yellow {
+    background-color: #F1C40F;
+}
+.text-dark-blue {
+    color: #34495E;
+}
+.text-green {
+    color: #16A085;
+}
+.text-blue {
+    color: #2980B9;
+}
+.text-orange {
+    color: #F39C12;
+}
+.text-red {
+    color: #E74C3C;
+}
+.text-purple {
+    color: #8E44AD;
+}
+.text-faded {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.tr_refunded{
+   background-color: #F39C12;
+}
+
+/*.m-badge.m-badge--success {
+    background-color: #34bfa3;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}*/
+
+.m-badge.m-badge--success {
+    background-color: #34bfa3;
+    color: #fff;
+    margin-right: -10px !important;
+    margin-bottom: 0px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+
+.m-badge.m-badge--orange {
+    background-color: #F39C12;
+	border-color: #fff;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--danger {
+    background-color: #f4516c;
+	border-color: #f4516c;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--default {
+    background-color: #cdd2df;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--warning {
+    background-color: #f4516c;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-checkbox {
+    margin-bottom: -16px !important;
+}
+
+.m-checkbox {
+    margin-bottom: -16px !important;
+}
+
+div.panel_seats,p.flip
+{
+  line-height: 30px;
+  margin:auto;
+  font-size:16px;
+  padding:5px;
+  text-align:center;
+  /*
+  background:#555;
+  border:solid 1px #666;
+  */
+  color:#ffffff;
+  border-radius:3px;
+  user-select:none;
+  margin-top: 46px;
+}
+div.panel_seats
+{
+  display:none;
+}
+p.flip
+{
+  cursor:pointer;
+}
+
+
+div.panel_refund_order,p.flip
+{
+  line-height: 30px;
+  margin:auto;
+  font-size:16px;
+  padding:5px;
+  text-align:center;
+  /*
+  background:#555;
+  border:solid 1px #666;
+  */
+  color:#000;
+  border-radius:3px;
+  user-select:none;
+  margin-top: 46px;
+}
+
+div.panel_refund_order
+{
+  display:none;
+}
+
+.row_seat_class {
+       margin-left: 25px !important;
+    margin-right: 16px !important;
+    background-color: #36a3f7;
+    color: #fff;
+    height: 42px;
+    padding: 6px;
+    margin-bottom: 12px;
+    text-align: left;
+    border-radius: 8px;
+}
+
+.small, small {
+    font-size: 80%;
+    font-weight: 400;
+}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title }} </h3>
+    </div>
+    <div> </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ adminLang.order_quick_nav_txt }}  </h3>
+            </div>
+          </div>
+		  <div class="m-portlet__head-tools">
+		  {% if(order_status == 'R') %}
+             <a href="javascript:void(0);" class="btn btn-danger m-btn m-btn--icon btn-lg m-btn--icon-only  m-btn--pill m-btn--air" style="cursor:default">
+				<i class="fa fa-times"></i>
+			</a>
+			{% else %}
+			<a href="javascript:void(0);" class="btn btn-success m-btn m-btn--icon btn-lg m-btn--icon-only  m-btn--pill m-btn--air" style="cursor:default">
+				<i class="fa fa-check"></i>
+			</a>
+			{% endif %}
+			<div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+		  {% if(next) %}
+		  <a href="javascript:void(0);" onclick="previousOrder({{ next }})" class="btn btn-info pull-left"><i class="la la-chevron-left"></i> {{ adminLang.order_previous_txt }}</a>  </li>
+		  {% endif %}
+		  {% if(previous) %}
+		  <a href="javascript:void(0);" onclick="nextOrder({{ previous }})" class="btn btn-info pull-right"> {{ adminLang.order_next_txt }} <i class="la la-chevron-right"></i></a>  </li>
+          {% endif %}
+		</div>
+		{% if(is_event_expired == 'N') %}
+		{% if(order_status == 'S') %}
+		<div class="m-portlet__body">
+		  <a href="javascript:void(0);"  class="btn btn-focus pull-left flip"><i class="la la-cog"></i> {{ adminLang.order_change_seats_txt }}</a>  </li>
+		  <a href="javascript:void(0);"  class="btn btn-danger pull-right flip_refund"><i class="la la-cog"></i> {{ adminLang.order_refund_txt }}</a>  </li>
+		  <div class="panel_seats" style="display: none;">
+			{{ available_seats|raw }}
+         </div>
+		 <div class="panel_refund_order" style="display: none;">
+			{{ refund_section|raw }}
+         </div>
+		 <p>&nbsp;</p>
+	    </div>
+		 {% endif %}
+		 {% endif %}
+		 <p>&nbsp;</p>
+      </div>
+      <!--end::Portlet--> 
+    </div>
+  </div>
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon m--hide"> <i class="la la-gear"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} </h3>
+            </div>
+          </div>
+		   <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+              <li class="m-portlet__nav-item"> 
+			   <a href="javascript:void(0);" onclick="downloadOrderReport({{ order_id }})" class="btn btn-info pull-right"><i class="la la-download"></i> {{ adminLang.dashboard_download_report_txt }}</a>  </li>
+            </ul>
+          </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form" id="form_add_aud_e">
+           <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+			<!------ Include the above in your HEAD tag ---------->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="invoice-title">
+							<h2>{{ adminLang.dashboard_invoice_txt }}</h2><h3 class="pull-right">{{ adminLang.dashboard_invoice_txt }} # {{ order.invoice_number }}</h3>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-6">
+								<address>
+								<strong>{{ adminLang.dashboard_billed_to_txt }}:</strong><br>
+									{{ customer_email|raw }} 
+								</address>
+							</div>
+							<div class="col-md-6 text-right">
+								<address>
+								<strong>{{ adminLang.dashboard_shipped_to_txt }}:</strong><br>
+									{{ customer_data|raw }} 
+								</address>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<address>
+									<strong>{{ adminLang.dashboard_payment_method_txt }}:</strong><br>
+									Type : {{ order_payment_type }}<br>
+									TXN ID: {{ order.payment_id}}
+								</address>
+							</div>
+							<div class="col-md-6 text-right">
+								<address>
+									<strong>{{ adminLang.dashboard_order_date_txt }}:</strong><br>
+									{{ order_date|raw }}
+									<br><br>
+								</address>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title"><strong>{{ adminLang.dashboard_order_summary_txt }}</strong></h3>
+							</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<td><strong>{{ adminLang.dashboard_event_txt}}</strong></td>
+												<td><strong>{{ adminLang.dashboard_category_txt}}</strong></td>
+												<td><strong>{{ adminLang.dashboard_row_txt }}</strong></td>
+												<td class="text-center"><strong>{{ adminLang.dashboard_seat_txt }}</strong></td>
+												<td class="text-center"><strong>{{ adminLang.dashboard_price_txt }}</strong></td>
+												<td class="text-center"><strong>{{ adminLang.dashboard_quantity_txt}}</strong></td>
+												<td class="text-right"><strong>{{ adminLang.dashboard_totals_txt }}</strong></td>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- foreach ($order->lineItems as $line) or some such thing here -->
+											{{ items_list|raw }}		
+											<tr>
+												<td class="thick-line"></td>
+												<td class="thick-line"></td>
+												<td class="thick-line"></td>
+												<td class="thick-line"></td>
+												<td class="thick-line"></td>
+												<td class="thick-line text-center"><strong>{{ adminLang.dashboard_sub_total_txt }}</strong></td>
+												<td class="thick-line text-right">{{ sub_total }}</td>
+											</tr>
+											<tr>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line text-center"><strong>{{ adminLang.dashboard_booking_fee_txt }}</strong></td>
+												<td class="no-line text-right">{{ booking_fee }}</td>
+											</tr>
+											<tr>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line text-center"><strong>Code Promo</strong></td>
+												<td class="no-line text-right">{{ discount_amount }}</td>
+											</tr>
+											<tr>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line"></td>
+												<td class="no-line text-center"><strong>{{ adminLang.dashboard_total_txt}}</strong></td>
+												<td class="no-line text-right">{{ total }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+              <div class="row">
+                <div class="col-lg-2"><button type="button" onClick="document.location='../../orders'" class="btn btn-secondary">{{ adminLang.order_go_back_txt }}</button></div>
+                <div class="col-lg-10">
+                 <a href="javascript:void(0);" onclick="sendConfirmationEmail({{ order_id }}, {{ customer_id }})" class="btn btn-info pull-right" style="margin:0 auto"><i class="fa fa-envelope"></i> Re-send Email </a> 
+  <div id="emailMsgDiv"></div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--end::Form--> 
+      </div>
+      <!--end::Portlet--> 
+      <!--begin::Portlet--> 
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+<!-- Start Change Ticket Seat Model --> 
+  <div class="modal fade" id="seatsChangedSeatsModel" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Seat</h4>
+        </div>
+        <div class="modal-body" >
+		<p id="loadContentSection"></p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Model -->  
+
+
+{% endblock %}
+{% block footerscripts %} 
+<script>
+var ORDER_PAGE = 'V';
+var order_filtered = "N"; 
+var event_id_val = '';
+var category_id_val = '';
+var row_id_val = '';
+var Customer_name = '';
+var Total_Amount = '';
+var Payment_Type = '';
+var Date_Ordered = '';
+var Actions = '';
+var total_seat_quantity = "{{ total_seat_quantity }}";
+$(document).ready(function(){
+ //alert(total_seat_quantity);
+$(".flip").click(function(){
+   $(".panel_seats").toggle();
+   $(".panel_refund_order").hide();
+});
+
+$(".flip_refund").click(function(){
+   $(".panel_refund_order").toggle();
+   $(".panel_seats").hide();
+});
+
+/*var checkboxValues = [];
+$('.checkbox').click(function(){
+var checked_boxes = $('.checkbox').filter(':checked').length;
+   $('.checked_counter').text(checked_boxes);
+   if($(this).is(':checked')){
+      checkboxValues.push($(this).val());
+      console.log(this.value);
+	}
+});*/
+$('#btn_save_seats').prop('disabled', true);
+$('input[type="checkbox"]').click(function(event) {
+    if (this.checked && $('.checkbox').filter(':checked').length > total_seat_quantity) {
+        event.preventDefault();
+		swal("{{ adminLang.order_warning_txt }}!","{{ adminLang.order_not_allowed_seat_txt }} "+total_seat_quantity+" {{ adminLang.order_seats_txt }}","error");
+       /*swal({title:"jQuery HTML example",html:$("<div>").addClass("some-class").text("jQuery is everywhere."),animation:!1,customClass:"animated tada"});*/
+    }else{
+	  var checked_boxes = $('.checkbox').filter(':checked').length;
+      $('.checked_counter').text(checked_boxes);
+      setValue();
+	}
+	// For button to enable
+	if (this.checked && $('.checkbox').filter(':checked').length >= total_seat_quantity) {
+	   $('#btn_save_seats').prop('disabled', false);
+	}else{
+	  $('#btn_save_seats').prop('disabled', true);
+	}
+	
+});
+
+
+/*
+$(".checkbox").change(function () {
+   if (this.checked && $('input:checked').length > total_seat_quantity) {
+        event.preventDefault();
+        alert(''+order_not_allowed_seat_txt+' '+total_seat_quantity+' '+order_seats_txt+'');
+    }else{
+      var checked_boxes = $('.checkbox').filter(':checked').length;
+      $('.checked_counter').text(checked_boxes);
+      setValue();
+	 }
+	
+	
+});*/
+
+function setValue() {
+    var items = $(".checkbox");
+    var result = [];
+    for (var i = 0; i < items.length; i++) {
+        var item = $(items[i]);
+        if (item.is(":checked")) {
+            result.push(item.val());
+        }
+    }
+    var text = result.join(",");
+    $(".selected_ids").val(text);
+	
+	 console.log(item.val());
+}
+
+
+
+
+
+	
+});
+</script>
+<!--begin::Page Vendors --> 
+{% include "admin/Order/lang/lang.twig" %} 
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-admin-orders.js" type="text/javascript"></script>
+<script src="{{ base_url() }}/assets/admin/demo/default/custom/components/forms/widgets/autosize.js" type="text/javascript"></script>
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

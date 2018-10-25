@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Productors  -->
+
+{% set is_productor_add  = 'N'  %}
+{% set is_productor_edit = 'N'  %}
+{% set is_productor_del  = 'N'  %}
+{% set is_productor_allowed  = 'N'  %}
+
+{% set productor_add_val   = role_id~'_'~10~'_' ~1  %}
+{% set productor_edit_val  = role_id~'_'~10~'_' ~2  %}
+{% set productor_del_val   = role_id~'_'~10~'_' ~3  %}
+
+{% if productor_add_val  in assignedModulesArray %}
+{% set is_productor_add = 'Y'  %}
+{% set is_productor_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if productor_edit_val  in assignedModulesArray %}
+{% set is_productor_edit = 'Y'  %}
+{% set is_productor_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if productor_del_val  in assignedModulesArray %}
+{% set is_productor_del = 'Y'  %}
+{% set is_productor_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Productors  -->
+
+<h1>Productors page included</h1>
+

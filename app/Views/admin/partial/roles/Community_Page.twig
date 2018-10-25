@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Community Page  -->
+
+{% set is_community_page_add  = 'N'  %}
+{% set is_community_page_edit = 'N'  %}
+{% set is_community_page_del  = 'N'  %}
+{% set is_community_page_allowed  = 'N'  %}
+
+{% set community_page_add_val   = role_id~'_'~25~'_' ~1  %}
+{% set community_page_edit_val  = role_id~'_'~25~'_' ~2  %}
+{% set community_page_del_val   = role_id~'_'~25~'_' ~3  %}
+
+{% if community_page_add_val  in assignedModulesArray %}
+{% set is_community_page_add = 'Y'  %}
+{% set is_community_page_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if community_page_edit_val  in assignedModulesArray %}
+{% set is_community_page_edit = 'Y'  %}
+{% set is_community_page_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if community_page_del_val  in assignedModulesArray %}
+{% set is_community_page_del = 'Y'  %}
+{% set is_community_page_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Community Page  -->
+
+

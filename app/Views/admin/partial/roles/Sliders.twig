@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Sliders  -->
+
+{% set is_slider_add  = 'N'  %}
+{% set is_slider_edit = 'N'  %}
+{% set is_slider_del  = 'N'  %}
+{% set is_slider_allowed  = 'N'  %}
+
+{% set slider_add_val   = role_id~'_'~5~'_' ~1  %}
+{% set slider_edit_val  = role_id~'_'~5~'_' ~2  %}
+{% set slider_del_val   = role_id~'_'~5~'_' ~3  %}
+
+{% if slider_add_val  in assignedModulesArray %}
+{% set is_slider_add = 'Y'  %}
+{% set is_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if slider_edit_val  in assignedModulesArray %}
+{% set is_slider_edit = 'Y'  %}
+{% set is_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if slider_del_val  in assignedModulesArray %}
+{% set is_slider_del = 'Y'  %}
+{% set is_slider_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Sliders  -->
+
+<h1>Sliders page included</h1>
+

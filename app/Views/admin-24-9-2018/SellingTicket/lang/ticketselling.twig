@@ -1,0 +1,306 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+
+{% block maincontent %} 
+<link href="{{ base_url() }}/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ base_url() }}/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.has_error{
+  border-color:red !important;
+}
+#country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:90%;position: absolute;}
+#country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+#country-list li:hover{background:#ece3d2;cursor: pointer;}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title ">Ticket Selling</h3>
+    </div>
+    <div>  </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+ 
+
+
+<div class="m-content">
+   <!--Begin::Section-->
+   <div class="row">
+      <div class="col-xl-12">
+         <!--begin::Portlet-->
+         <div class="m-portlet " id="m_portlet">
+            <div class="m-portlet__head">
+               <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                     <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+                     <h3 class="m-portlet__head-text"> Ticket Selling </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="m-portlet__body">
+               <div class="modal-content">
+                  <form name="form_add_selling" id="form_add_selling" method="post"   onsubmit="return AddSellingTicket()">
+                     <div class="modal-header">
+                        <h4 class="modal-title">Customer Details</h4>
+                     </div>
+                     <div class="modal-body">
+                        <div class="" id="mesg_div"></div>
+						 <div class="form-group  ">
+                          <div class="form-group  ">
+						 
+                          <input type="text"  class="form-control m-input" value="Utilisateur responsable de la vente"/> 
+                          
+                        </div>
+                          
+                        </div>
+                        <div class="form-group  ">
+                           <label class="control-label" for=""> Select Selling Type</label>
+                           <select name="selling_type" id="selling_type" class="form-control">
+                              <option value="">Selling Type</option>
+                              <option value="1">By Phone</option>
+                              <option value="0">Physical</option>
+                           </select>
+                           <span class="help-block "></span>
+                        </div>
+						
+						
+                        <div class="form-group  ">
+                           <label class="control-label" for="">Search User*</label>
+                           <div class="m-input-icon m-input-icon--left">
+                              <input type="text" class="form-control m-input" placeholder="{{ adminLang.common_search_txt }}..." id="genSearch">
+                              <span class="m-input-icon__icon m-input-icon__icon--left">
+                              <span>
+                              <i class="la la-search"></i>
+                              </span>
+                              </span>
+                           </div>
+                        </div>
+                        <br>
+                        <!--end: Search Form -->
+                        <!--begin: Datatable -->
+                        <div class="m_datatable_mem" id="ajax_data"></div>
+                        <div id="addcustm">
+                           <div class="form-group  ">
+                              <button type="button" class="btn btn-primary" onclick="return ShowForm();">Add New Customer</button>
+							  <input type="hidden" name="isnewcustomer"  id="isnewcustomer" value='0' />
+							  <span class="help-block "></span>
+                           </div>
+                        </div>
+                        <div id="customerdetails">
+                           <div class="form-group  ">
+                              <label class="control-label" for="">First Name*</label>
+                              <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
+                              <span class="help-block "></span>
+                           </div>
+                           <div class="form-group  ">
+                              <label class="control-label" for="">Last Name*</label>
+                              <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+                              <span class="help-block "></span>
+                           </div>
+                           <div class="form-group  ">
+                              <label class="control-label" for="">Email*</label>
+                              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                              <span class="help-block "></span>
+                           </div>
+                           <div class="form-group  ">
+                              <label class="control-label" for="">Phone Number*</label>
+                              <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                              <span class="help-block "></span>
+                           </div>
+                        
+                        </div>
+						 <div class="form-group  ">
+							  <label class="control-label" for="">Select Event Group</label>
+							  <select name="event_group" id="event_group" class="form-control">
+							  <option value="">Select</option>
+							  {% for group_name in Event_group_name %}
+							   <option value={{group_name['id']}}>{{group_name['title']|raw}}</option>
+							   {%endfor%}
+							  </select>
+							  
+							  <span class="help-block "></span>
+					 	</div>
+					   <div class="form-group  ">
+							  <label class="control-label" for="">Select Event</label>
+							  <select name="event_id" id="event_id" class="form-control">
+							     <option value="">Select</option>
+							  
+							  </select>
+							  
+							  <span class="help-block "></span>
+					 	</div>	
+					   <div class="form-group  ">
+							  <label class="control-label" for="">Select Event Time</label>
+							  <select class="form-control" name="eventtime" id="eventtime">
+							     <option value="">Select</option>
+							  
+							  </select>
+							  
+							  <span class="help-block "></span>
+					 	</div>	
+						<div class="form-group" id="showevent"></div>
+						
+						
+						
+                         
+                        <!--begin: Datatable -->
+                        <!--begin: Datatable
+                        <div class="m_events_of_day" id="ajax_data"></div>
+                        end: Datatable -->	
+                        <!-- Event time start-->					
+                        <div class="form-group">
+                           <div  id="timeshow" ></div>
+                        </div>
+                        <!-- Event time End-->	
+                        <!-- shopping cart start-->	
+                        <div id="eventdetails" >
+                           
+                           <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" id="myevent" ></div>
+                        </div>
+                        <!--<input type="hidden" id="booking_fee" name="total_price" />  -->
+                       
+                        <!-- shopping cart End-->
+						<div id="byphone">						
+                        <div class="form-group " >
+                           <label class="control-label" for="">Payment</label></br>
+                           <label class="control-label" for="">credit card Number*</label>
+                           <input type="text" class="form-control" id="crcard" name="crcard" placeholder="card number" maxlength="16">
+						   </div>
+						   <div class="form-group "> 
+						   <label class="control-label" for="">Expaire Date*</label>
+                           <select name="crmonth" id="crmonth">
+                              <option value="">Month</option>
+                              {% for i in 1..12 %}
+                              <option value ="{{ i }}" >{{ i }}</option>
+                              {% endfor %} 
+                           </select>
+                           <select name="cryear" id="cryear">
+                              <option value="">Year</option>
+                              {% for i in 2018..2040 %}
+                              <option value ="{{ i }}" >{{ i }}</option>
+                              {% endfor %} 
+                           </select>
+						   </div>
+						   <div class="form-group ">
+                          <label class="control-label" for="">CVV*</label>						   
+                           <input type="text" class="form-control" id="crvv" name="crvv" placeholder="cvv" maxlength="4">
+                           <span class="help-block "></span>
+                        </div>
+                        <div class="form-group " id="byphysical">
+                           <label class="control-label" for="">Payment</label></br>
+                           Cash <input type="radio" class="form-control"  name="payment" value="cash" checked="checked" />
+                           Cheque <input type="radio" class="form-control"  name="payment" value="cheque" />
+                           Credit Card <input type="radio" class="form-control"  name="payment" value="ccard" />
+                        </div>
+                        <div id="cheque">
+                           <div class="form-group">
+                              <h2> Enter Cheque Details here</h2>
+                              <label class="control-label" for="">Name on Account*</label>
+                              <input type="text" class="form-control" id="nameaccount" name="nameaccount" placeholder="Name">
+                              <label class="control-label" for="">Bank Name*</label>
+                              <input type="text" class="form-control" id="bankname" name="bankname" placeholder="Bank Name">
+                              <label class="control-label" for="">Account Number*</label>
+                              <input type="text" class="form-control" id="acoountnumber" name="acoountnumber" placeholder="A/c Number">
+                           </div>
+                        </div>
+                        <div id="crdtcard">
+                           <div class="form-group">
+                              <label class="control-label" for="">credit card Number*</label>
+                              <input type="text" class="form-control" id="crdcard" name="crdcard" placeholder="card number" maxlength="16">
+							  </div>
+							  <div class="form-group">
+							  <label class="control-label" for="">Expaire Date*</label>
+                              <select name="cmonth" id="cmonth" >
+                                 <option value="">Month</option>
+                                 {% for i in 1..12 %}
+                                 <option value ="{{ i }}" >{{ i }}</option>
+                                 {% endfor %} 
+                              </select>
+                              <select name="cyear" id="cyear">
+                                 <option value="">Year</option>
+                                 {% for i in 2018..2040 %}
+                                 <option value ="{{ i }}" >{{ i }}</option>
+                                 {% endfor %} 
+                              </select>
+							  </div>
+							  <div class="form-group">
+							  <label class="control-label" for="">CVV *</label>
+                              <input type="text" class="form-control" id="cvv"  name="cvv" placeholder="cvv" maxlength="4">
+                              <span class="help-block "></span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <input  type="hidden" name="memberid" id="usermid" />
+                        <!--<input  type="hidden" name="eventid" id="eventeid" />-->
+                         <!--<input  type="hidden" name="evnttime" id="evnttime" />-->
+                        <input  type="hidden" name="booking_fees" id="booking_fees" />
+                        <input  type="hidden" name="total_row_qtx" id="total_row_qtx" />
+                        <input  type="hidden" name="total_booking_fees" id="total_booking_fees" />
+						<input  type="hidden" name="total_reserved_fees" id="total_reserved_fees" />
+                        <input type="submit" id="finalsubmit" class="btn btn-primary" value="Submit"/>
+                     </div>
+                     <div id="selling_result" style="text-align:center;"></div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         <!--end::Portlet--> 
+      </div>
+   </div>
+</div>
+
+
+
+{% endblock %}
+{% block footerscripts %} 
+<!--begin::Page Vendors --> 
+{% include "admin/Member/lang/lang.twig" %}
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-selling.js" type="text/javascript"></script>
+<script src="{{ base_url() }}/assets/admin/demo/default/custom/components/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script> 
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script>
+ $('#event_group').on('change', function() {
+          var mydata = this.value;
+		  if(this.value!='')
+		  {
+		  
+				// alert(mydata);
+				$.ajax({
+					type: "get",
+					url: 'getEventbyGroup',
+					data:{ event_group_id:mydata},
+					success: function( data ) {
+						//alert('done');
+						
+						$("#event_id").html( data );
+						//$("#showevent").html( data );
+					}
+				});
+		 }
+ });
+ $('#event_id').on('change', function() {
+          var mydata = this.value;
+		  if(this.value!='')
+		  {
+		  
+				// alert(mydata);
+				$.ajax({
+					type: "get",
+					url: 'getEventTime',
+					data:{ event_id:mydata},
+					success: function( data ) {
+						//alert('done');
+						
+						$("#eventtime").html( data );
+						//$("#showevent").html( data );
+					}
+				});
+		 }
+ });
+</script>
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

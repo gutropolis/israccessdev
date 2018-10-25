@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Sections  -->
+
+{% set is_section_add  = 'N'  %}
+{% set is_section_edit = 'N'  %}
+{% set is_section_del  = 'N'  %}
+{% set is_section_allowed  = 'N'  %}
+
+{% set section_add_val   = role_id~'_'~13~'_' ~1  %}
+{% set section_edit_val  = role_id~'_'~13~'_' ~2  %}
+{% set section_del_val   = role_id~'_'~13~'_' ~3  %}
+
+{% if section_add_val  in assignedModulesArray %}
+{% set is_section_add = 'Y'  %}
+{% set is_section_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if section_edit_val  in assignedModulesArray %}
+{% set is_section_edit = 'Y'  %}
+{% set is_section_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if section_del_val  in assignedModulesArray %}
+{% set is_section_del = 'Y'  %}
+{% set is_section_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Sections  -->
+
+<h1>Sections page included</h1>
+

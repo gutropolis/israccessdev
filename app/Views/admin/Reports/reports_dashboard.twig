@@ -1,0 +1,96 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+
+
+{% block maincontent %}
+<style type="text/css">
+.has_error{
+  border-color:red !important;
+}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title }} </h3>
+    </div>
+    <div> </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-line-graph"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} </h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools"> </div>
+        </div>
+        <div class="m-portlet__body"> 
+          <!--begin::Section-->
+          <div class="m-section m-section--last">
+            <div class="m-section__content"> 
+              <!--begin::Preview-->
+              <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                <div class="m-demo__preview">
+                  <div class="m-nav-grid">
+                    <div class="m-nav-grid__row"> 
+					  <a href="general_data_report" class="m-nav-grid__item"> 
+					  <i class="m-nav-grid__icon flaticon-file"></i> 
+					  <span class="m-nav-grid__text"> General data </span> 
+					  </a> 
+					  <a href="accounting_report" class="m-nav-grid__item"> 
+					  <i class="m-nav-grid__icon flaticon-time"></i> 
+					  <span class="m-nav-grid__text"> By event (accounting approach) </span> 
+					  </a> 
+					  <a href="sales_report" class="m-nav-grid__item"> 
+					  <i class="m-nav-grid__icon flaticon-folder"></i> 
+					  <span class="m-nav-grid__text"> By event (sales approach) </span> 
+					  </a> 
+					  </div>
+                    <div class="m-nav-grid__row"> 
+					<a href="by_productor_report" class="m-nav-grid__item"> 
+					<i class="m-nav-grid__icon flaticon-user"></i> 
+					<span class="m-nav-grid__text"> By Productor </span> 
+					</a> 
+					<a href="culturaccess_report" class="m-nav-grid__item"> 
+					<i class="m-nav-grid__icon flaticon-clipboard"></i> 
+					<span class="m-nav-grid__text"> CulturAccess </span> 
+					</a> 
+					<a href="#" class="m-nav-grid__item" style="display:none"> 
+					<i class="m-nav-grid__icon flaticon-interface-3"></i> 
+					<span class="m-nav-grid__text"> Check Logs </span> 
+					</a> 
+					</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+
+<!-- Modal --> 
+
+<!-- Modal --> 
+<!-- Model --> 
+
+<!-- Model --> 
+
+{% endblock %}
+{% block footerscripts %} 
+<!--begin::Page Vendors --> 
+
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Payment Types  -->
+
+{% set is_payment_type_add  = 'N'  %}
+{% set is_payment_type_edit = 'N'  %}
+{% set is_payment_type_del  = 'N'  %}
+{% set is_payment_type_allowed  = 'N'  %}
+
+{% set payment_type_add_val   = role_id~'_'~23~'_' ~1  %}
+{% set payment_type_edit_val  = role_id~'_'~23~'_' ~2  %}
+{% set payment_type_del_val   = role_id~'_'~23~'_' ~3  %}
+
+{% if payment_type_add_val  in assignedModulesArray %}
+{% set is_payment_type_add = 'Y'  %}
+{% set is_payment_type_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if payment_type_edit_val  in assignedModulesArray %}
+{% set is_payment_type_edit = 'Y'  %}
+{% set is_payment_type_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if payment_type_del_val  in assignedModulesArray %}
+{% set is_payment_type_del = 'Y'  %}
+{% set is_payment_type_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Payment Types  -->
+
+<h1>Payment Types page included</h1>
+

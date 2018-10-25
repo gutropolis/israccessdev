@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Partners  -->
+
+{% set is_partner_add  = 'N'  %}
+{% set is_partner_edit = 'N'  %}
+{% set is_partner_del  = 'N'  %}
+{% set is_partner_allowed  = 'N'  %}
+
+{% set partner_add_val   = role_id~'_'~21~'_' ~1  %}
+{% set partner_edit_val  = role_id~'_'~21~'_' ~2  %}
+{% set partner_del_val   = role_id~'_'~21~'_' ~3  %}
+
+{% if partner_add_val  in assignedModulesArray %}
+{% set is_partner_add = 'Y'  %}
+{% set is_partner_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if partner_edit_val  in assignedModulesArray %}
+{% set is_partner_edit = 'Y'  %}
+{% set is_partner_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if partner_del_val  in assignedModulesArray %}
+{% set is_partner_del = 'Y'  %}
+{% set is_partner_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Partners  -->
+
+<h1>Partners page included</h1>
+

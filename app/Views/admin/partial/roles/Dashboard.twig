@@ -1,0 +1,9 @@
+<!-- BEGIN: Dasbhoard  -->
+
+{% set is_dashboard_view = 'N'  %}
+{% set dashboard_view_val  = role_id~'_'~1~'_' ~4  %}
+{% if dashboard_view_val  in assignedModulesArray %}
+{% set is_dashboard_view = 'Y'  %}
+{% endif  %}
+<!-- End: Dasbhoard  -->
+

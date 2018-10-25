@@ -1,0 +1,180 @@
+<!--Begin::Section-->
+<div class="row">
+	<div class="col-xl-8">
+		<div class="m-portlet m-portlet--mobile ">
+			<div class="m-portlet__head">
+		    	<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-title">
+			    		<h3 class="m-portlet__head-text">
+									{{ adminLang.dashboard_monthly_order_txt }}
+							<form id="order_frm_changed" name="order_frm_changed" action=""  method="get" class="horizontal-form" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="from_date" id="from_date" value="{{ from_date_val }}"  />
+							<input type="hidden" name="to_date" id="to_date" value="{{ to_date_val }}"  />
+					<div class="input-group col-md-8" id="defaultrange_1" style="margin-left: 172px;margin-top: -27px;">
+  <input type="text" class="form-control col-md-12" readonly placeholder="{{ adminLang.dashboard_date_range_placeholder_txt }}" name="date_range_order" id="date_range_order" value="{{ date_range_order_val }}" >
+  <span class="input-group-btn">
+  <button class="btn default date-range-toggle" type="button"><i class="fa fa-calendar"></i></button>
+  </span> 
+  </div>
+  </form>
+  </h3>
+  </div>
+  </div>
+										<div class="m-portlet__head-tools">
+										
+										<!-- Example of download button -->
+											<div class="btn-group">
+											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<i class="fa fa-download"></i> {{ adminLang.dashboard_download_txt }}
+											  </button>
+											  <div class="dropdown-menu">
+												<a class="dropdown-item" href="javascript:void(0);" onclick="downloadPDF()"><i class="fa fa-file-pdf-o"></i> {{ adminLang.dashboard_pdf_txt }}</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="javascript:void(0);" onclick="downloadCSV()"><i class="fa fa-file-excel-o"></i> {{ adminLang.dashboard_csv_txt}}</a>
+											  </div>
+											</div>
+											
+										</div>
+									</div>
+									<div class="m-portlet__body">
+										<!--begin: Datatable -->
+										{% if (is_order_searched == 0) %}
+										<div class="m_datatable_orders" ></div>
+										{% endif %}
+										{% if(is_order_searched == 1) %}
+										<div class="m_datatable_orders_list"></div>
+										{% endif %}
+										<!--end: Datatable -->
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4">
+								<!--begin:: Widgets/Audit Log-->
+								<div class="m-portlet m-portlet--full-height ">
+									<div class="m-portlet__head">
+										<div class="m-portlet__head-caption">
+											<div class="m-portlet__head-title">
+												<h3 class="m-portlet__head-text">
+													{{ adminLang.dashboard_order_log_txt }}
+												</h3>
+											</div>
+										</div>
+										<div class="m-portlet__head-tools">
+											<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+												<li class="nav-item m-tabs__item">
+													<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
+														{{ adminLang.dasbhoard_today_txt }}
+													</a>
+												</li>
+												<li class="nav-item m-tabs__item">
+													<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
+														{{ adminLang.dashboard_week_txt }}
+													</a>
+												</li>
+												<li class="nav-item m-tabs__item">
+													<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
+														{{ adminLang.dashboard_month_txt}}
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="m-portlet__body">
+										<div class="tab-content">
+											<div class="tab-pane active" id="m_widget4_tab1_content">
+												<div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+													<div class="m-list-timeline m-list-timeline--skin-light">
+														<div class="m-list-timeline__items">
+															
+															
+															 {% if section_3_today_orders %}
+                                                             {% for row in section_3_today_orders %}
+
+															<div class="m-list-timeline__item">
+																<span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+																<span class="m-list-timeline__text">
+																	{{ row.customer_name|raw }}
+																	<span class="m-badge m-badge--info m-badge--wide">
+																		{{ row.order_amount }}
+																	</span>
+																</span>
+																<span class="m-list-timeline__time">
+																	{{ row.order_time|raw }}
+																</span>
+															</div>
+															{% endfor %} 
+                                                            {% else %}
+                                                            <span class="m-badge m-badge--danger m-badge--wide">
+																		{{ adminLang.no_data_found_txt }}
+																	</span>
+                                                            {% endif %}															
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="m_widget4_tab2_content">
+                                            <div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+													<div class="m-list-timeline m-list-timeline--skin-light">
+														<div class="m-list-timeline__items">
+															{% if section_3_this_week_orders %}
+                                                             {% for row in section_3_this_week_orders %}
+
+															<div class="m-list-timeline__item">
+																<span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+																<span class="m-list-timeline__text">
+																	{{ row.customer_name|raw }}
+																	<span class="m-badge m-badge--info m-badge--wide">
+																		{{ row.order_amount }}
+																	</span>
+																</span>
+																<span class="m-list-timeline__time">
+																	{{ row.order_time|raw }}
+																</span>
+															</div>
+															{% endfor %} 
+                                                            {% else %}
+                                                            <span class="m-badge m-badge--danger m-badge--wide">
+																		{{ adminLang.no_data_found_txt }}
+																	</span>
+                                                            {% endif %}
+															
+														</div>
+													</div>
+												</div></div>
+											<div class="tab-pane" id="m_widget4_tab3_content">
+                                            <div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+													<div class="m-list-timeline m-list-timeline--skin-light">
+														<div class="m-list-timeline__items">
+														{% if section_3_this_month_orders %}
+                                                             {% for row in section_3_this_month_orders %}
+
+															<div class="m-list-timeline__item">
+																<span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+																<span class="m-list-timeline__text">
+																	{{ row.customer_name|raw }}
+																	<span class="m-badge m-badge--info m-badge--wide">
+																		{{ row.order_amount }}
+																	</span>
+																</span>
+																<span class="m-list-timeline__time">
+																	{{ row.order_time|raw }}
+																</span>
+															</div>
+															{% endfor %} 
+                                                            {% else %}
+                                                            <span class="m-badge m-badge--danger m-badge--wide">
+																		{{ adminLang.no_data_found_txt }}
+																	</span>
+                                                            {% endif %}
+															
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--end:: Widgets/Audit Log-->
+							</div>
+						</div>
+<!--End::Section--> 

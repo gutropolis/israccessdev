@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Members  -->
+
+{% set is_member_add  = 'N'  %}
+{% set is_member_edit = 'N'  %}
+{% set is_member_del  = 'N'  %}
+{% set is_member_allowed  = 'N'  %}
+
+{% set member_add_val   = role_id~'_'~11~'_' ~1  %}
+{% set member_edit_val  = role_id~'_'~11~'_' ~2  %}
+{% set member_del_val   = role_id~'_'~11~'_' ~3  %}
+
+{% if member_add_val  in assignedModulesArray %}
+{% set is_member_add = 'Y'  %}
+{% set is_member_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if member_edit_val  in assignedModulesArray %}
+{% set is_member_edit = 'Y'  %}
+{% set is_member_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if member_del_val  in assignedModulesArray %}
+{% set is_member_del = 'Y'  %}
+{% set is_member_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Members  -->
+
+
+

@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Dont Miss Events  -->
+
+{% set is_dont_miss_event_add  = 'N'  %}
+{% set is_dont_miss_event_edit = 'N'  %}
+{% set is_dont_miss_event_del  = 'N'  %}
+{% set is_dont_miss_event_allowed  = 'N'  %}
+
+{% set dont_miss_event_add_val   = role_id~'_'~16~'_' ~1  %}
+{% set dont_miss_event_edit_val  = role_id~'_'~16~'_' ~2  %}
+{% set dont_miss_event_del_val   = role_id~'_'~16~'_' ~3  %}
+
+{% if dont_miss_event_add_val  in assignedModulesArray %}
+{% set is_dont_miss_event_add = 'Y'  %}
+{% set is_dont_miss_event_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if dont_miss_event_edit_val  in assignedModulesArray %}
+{% set is_dont_miss_event_edit = 'Y'  %}
+{% set is_dont_miss_event_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if dont_miss_event_del_val  in assignedModulesArray %}
+{% set is_dont_miss_event_del = 'Y'  %}
+{% set is_dont_miss_event_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Dont Miss Events  -->
+
+

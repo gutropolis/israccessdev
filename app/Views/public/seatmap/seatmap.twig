@@ -1,0 +1,26 @@
+
+{% extends "public/layouts/layout-public.twig" %}
+
+{% block maincontent %}
+
+	 <iframe class="myIframe" width="100%" frameborder="0" src="{{base_url()}}/seatmap/front.html"  scrolling="no"   onload="resizeIframe(this)"></iframe>
+
+
+  
+		{% endblock %}
+		
+{% block footerscripts %}
+ 
+    <script src="{{ base_url() }}/assets/js/owl.carousel.js"></script>
+    <script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+	obj.style.width = obj.contentWindow.document.body.scrollWidth + 'px';
+  }
+</script>
+   
+   
+  
+
+	
+{% endblock %}

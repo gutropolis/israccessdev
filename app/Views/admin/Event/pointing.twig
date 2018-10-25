@@ -1,0 +1,35 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+{% block maincontent %}
+<div class="m-content">
+	<a href="/admin/exportpointing/{{event_id}}" class="button button-primary btn btn-primary">Export XLS</a>
+	<div class="m_datatable_evg m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+		<table class="m-datatable__table" style="display:block; overflow-x:auto;">
+			<thead class="m-datatable__head">
+				<tr class="m-datatable__row" style="left:0px">
+					<th style="width:50px !important; " class="m-datatable__cell">id</th>
+					<th style="width:150px !important; " class="m-datatable__cell">N° Facture</th>
+					<th style="width:150px !important; " class="m-datatable__cell">Client </th>
+					<th style="width:150px !important; " class="m-datatable__cell">Montant</th>
+					<th style="width:150px !important; " class="m-datatable__cell">Événement </th>
+					<th style="width:150px !important; " class="m-datatable__cell">N° commande</th>
+					<th style="width:150px !important; " class="m-datatable__cell">N° événement</th>
+				</tr>
+			</thead>
+			<tbody class="m-datatable__body" style="">
+			{% for row in liste %}
+				<tr class="m-datatable__row">
+					<td style="width:50px !important; " class=" m-datatable__cell "> {{row.id}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.invoice_number}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.client_nom}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.total_price}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.event_name}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.order_id}} </td>
+					<td style="width:150px !important; " class=" m-datatable__cell "> {{row.event_id}}</td>
+				</tr>
+			{% endfor%}
+			</tbody>
+		
+		</table>
+	</div>
+</div>
+{% endblock %} 

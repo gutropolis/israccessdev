@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Event Groups  -->
+
+{% set is_event_group_add  = 'N'  %}
+{% set is_event_group_edit = 'N'  %}
+{% set is_event_group_del  = 'N'  %}
+{% set is_event_group_allowed  = 'N'  %}
+
+{% set event_group_add_val   = role_id~'_'~14~'_' ~1  %}
+{% set event_group_edit_val  = role_id~'_'~14~'_' ~2  %}
+{% set event_group_del_val   = role_id~'_'~14~'_' ~3  %}
+
+{% if event_group_add_val  in assignedModulesArray %}
+{% set is_event_group_add = 'Y'  %}
+{% set is_event_group_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if event_group_edit_val  in assignedModulesArray %}
+{% set is_event_group_edit = 'Y'  %}
+{% set is_event_group_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if event_group_del_val  in assignedModulesArray %}
+{% set is_event_group_del = 'Y'  %}
+{% set is_event_group_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Event Groups  -->
+
+
+

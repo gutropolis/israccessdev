@@ -1,0 +1,206 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+{% block maincontent %} 
+<style type="text/css">
+.allowed {
+    font-size: 30px;
+    color: #038103;
+}
+
+.not-allowed {
+    font-size: 30px;
+    color: #ff0000;
+}
+.dropdown-menu>.dropdown-item, .dropdown-menu>li>a {
+    color: #000000 !important;
+}
+.dropdown-menu>.dropdown-item>i, .dropdown-menu>li>a>i {
+    color: #000000 !important;
+}
+.m-datatable__pager-size{
+ display:none;
+}
+
+select2-selection__placeholder{
+ color:black !important;
+}
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none !important;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none !important;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 1px solid !important;
+}
+
+.table td, .table th {
+    padding: 0.45rem !important;
+    vertical-align: top !important;
+    border-top: 1px solid #f4f5f8 !important;
+}
+
+.panel-default {
+    border-color: #ddd;
+}
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel-heading {
+    padding: 4px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    padding-top: 12px;
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+} 
+.panel-body {
+    padding: 15px;
+}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title}} </h3>
+    </div>
+    <div> 
+	</div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  <!-- == Main Content  start here ========== -->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> Log In As </h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+			<form id="logInAsFrm" method="post" action="{{ base_url() }}/admin/do_log_in_as">
+			  <div class="row">
+				<div class="form-group col-md-5" style="margin-left:-20px">
+				  <select class="form-control " id="role_id"  name="role_id"  style="width:100%" >
+					<option value="">Select Role</option>
+					{% if system_roles %}
+					{% for row in system_roles %}
+					<option value="{{ row.id }}" {{ selected }}>{{ row.title|raw }}</option>
+				    {% endfor %} 
+				    {% endif %}
+				  </select>
+				</div>
+				<div class="form-group col-md-3">
+				  <select class="form-control " id="admin_user_id"  name="admin_user_id"  style="width:100%"  >
+				   <option value="">Select Admin User</option>
+				  </select>
+				</div>
+				<div class="form-group col-md-4" style="margin-top:0px">
+				<a href="javascript:void(0);" onclick="LogInAs()" class="btn btn-info">Log In As</a>
+				</div>
+			  </div>
+			</form>			   
+			  <br>
+			  <a href="javascript:void(0);" onclick="downloadModulesReport()" class="btn btn-info pull-right" style="display:none">Download Modules</a> <br>
+			 
+			  <br><br>
+			  <table class="table table-striped m-table table-bordered">
+			  <thead>
+				<tr>
+				 <th>#</th>
+				 <th>Module Name</th>
+				  <th>Add</th>
+				  <th>Edit</th>
+				  <th>Delete</th>
+				  <th>View</th>
+				</tr>
+			  </thead>
+			  <tbody id="role_modules_div">
+			   <!-- List Down role allowed modules -->
+			   
+			  </tbody>
+			</table>
+
+			   
+		
+		
+        </div>
+      </div>
+      <!--end::Portlet--> 
+    </div>
+  </div>
+  
+  
+  
+</div>
+<input type="hidden" id="from_date_default" value="{{ default_from_date }}">
+<input type="hidden" id="to_date_default" value="{{ default_to_date }}">
+
+<!--  Start Modal -->
+
+<div id="order_popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg"> 
+    
+    <!-- Modal content-->
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h4 class="modal-title editmodaltitleOrder">{{ adminLang.dashboard_view_order_txt }}
+			   <a href="javascript:void(0);" onclick="downloadOrderReport()" class="btn btn-info pull-right"><i class="la la-download"></i> {{ adminLang.dashboard_download_report_txt }}</a>  
+         </h4>
+      </div>
+      <div class="modal-body">
+	  <input type="hidden" id="order_id_order_id">
+        <p class="updatetextOrder">Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal --> 
+{% endblock %}
+{% block footerscripts %} 
+<!--begin::Page Vendors -->
+{% include "admin/User/lang/lang.twig" %} 
+
+<!--end::Page Vendors --> 
+<!--begin::Page Snippets --> 
+ 
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-admin-login-as.js" type="text/javascript"></script> 
+
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

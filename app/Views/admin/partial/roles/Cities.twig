@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Cities  -->
+
+{% set is_city_add  = 'N'  %}
+{% set is_city_edit = 'N'  %}
+{% set is_city_del  = 'N'  %}
+
+{% set is_city_allowed  = 'N'  %}
+
+{% set city_add_val   = role_id~'_'~3~'_' ~1  %}
+{% set city_edit_val  = role_id~'_'~3~'_' ~2  %}
+{% set city_del_val   = role_id~'_'~3~'_' ~3  %}
+
+{% if city_add_val  in assignedModulesArray %}
+{% set is_city_add = 'Y'  %}
+{% set is_city_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if city_edit_val  in assignedModulesArray %}
+{% set is_city_edit = 'Y'  %}
+{% set is_city_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if city_del_val  in assignedModulesArray %}
+{% set is_city_del = 'Y'  %}
+{% set is_city_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Cities  -->
+
+

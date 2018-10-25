@@ -1,0 +1,168 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+
+{% block maincontent %}
+<link href="{{ base_url() }}/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ base_url() }}/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.has_error{
+  border-color:red !important;
+}
+#country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:90%;position: absolute;}
+#country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+#country-list li:hover{background:#ece3d2;cursor: pointer;}
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ adminLang.operators_txt}} </h3>
+    </div>
+    <div> </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content"> 
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon"> <i class="flaticon-map-location"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ adminLang.operators_list_txt }} </h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools"> <a href="javascript:void(0);"  class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modal-add-operator"> <span> <i class="la la-plus"></i> <span> {{ adminLang.add_operator_txt }} </span> </span> </a>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+        <div class="m-portlet__body"> 
+          
+          <!--begin: Search Form --> 
+          
+          <!--end: Search Form --> 
+          <!--begin: Datatable -->
+          
+          <div class="m_datatable_operator" id="ajax_data"></div>
+          
+          <!--end: Datatable --> 
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
+<div class="modal modal-danger fade" id="modal-delete">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="form_del_data" id="form_del_data" method="post"  autocomplete="Off">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title del_title"></h4>
+        </div>
+        <div class="modal-body">
+          <p class="del_text"></p>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="id" id="id">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ adminLang.common_close_txt }}</button>
+          <button type="button" class="btn btn-danger" onClick="return delete_data();">{{ adminLang.common_delete_txt }}</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<!-- Modal --> 
+<!-- Modal -->
+
+<div class="modal fade" id="modal-add-operator">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="form_add_operator" id="form_add_operator" method="post"  autocomplete="Off">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">{{ adminLang.add_operator_txt}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="" id="mesg_div"></div>
+          <div class="form-group  ">
+            <label class="control-label" for=""> {{ adminLang.op_first_name_txt}}</label>
+            <input type="text" class="form-control" id="op_fname" name="op_fname" placeholder="{{ adminLang.op_fname_placeholder}}">
+            <span class="help-block "></span> </div>
+          <div class="form-group  ">
+            <label class="control-label" for=""> {{ adminLang.op_last_name_txt }}</label>
+            <input type="text" class="form-control" id="op_lname" name="op_lname" placeholder="{{ adminLang.op_lname_placeholder }}">
+            <span class="help-block "></span> </div>
+          <div class="form-group  ">
+            <label class="control-label" for=""> {{ adminLang.op_email_txt }}</label>
+            <input type="text" class="form-control" id="op_email" name="op_email" placeholder="{{ adminLang.op_email_placeholder }}">
+            <span class="help-block "></span> </div>
+          <div class="form-group  ">
+            <label class="control-label" for="">{{ adminLang.op_mobile_txt }}</label>
+            <input type="text" class="form-control" id="op_phone" name="op_phone" placeholder="{{ adminLang.op_mobile_placeholder }}">
+            <span class="help-block "></span> </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ adminLang.common_cancel }}</button>
+          <button type="button" class="btn btn-primary" onclick="return addOperator();">{{ adminLang.common_save_changes_txt }}</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<!-- Model -->
+<div class="modal fade" id="modal-edit-operator">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <form name="form_add_opereator_e" id="form_add_opereator_e" method="post"  autocomplete="Off">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ adminLang.update_operator_txt}}</h4>
+      </div>
+      <div class="modal-body">
+      <div class="" id="mesg_div_e"></div>
+      <div class="form-group  ">
+        <label class="control-label" for=""> {{ adminLang.op_first_name_txt }}</label>
+        <input type="text" class="form-control" id="op_fname_e" name="op_fname" placeholder="{{ adminLang.op_fname_placeholder }}">
+        <span class="help-block "></span> </div>
+      <div class="form-group  ">
+        <label class="control-label" for=""> {{ adminLang.op_last_name_txt }}</label>
+        <input type="text" class="form-control" id="op_lname_e" name="op_lname" placeholder="{{ adminLang.op_lname_placeholder }}">
+        <span class="help-block "></span> </div>
+      <div class="form-group  ">
+        <label class="control-label" for="">{{ adminLang.op_email_txt }}</label>
+        <input type="text" class="form-control" id="op_email_e" name="op_email" placeholder="{{ adminLang.op_email_placeholder }}">
+        <span class="help-block "></span> </div>
+      <div class="form-group  ">
+        <label class="control-label" for=""> {{ adminLang.op_mobile_txt }}</label>
+        <input type="text" class="form-control" id="op_phone_e" name="op_phone" placeholder="{{ adminLang.op_mobile_placeholder}}">
+        <span class="help-block "></span> </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id" id="id_e">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ adminLang.common_close_txt }}</button>
+        <button type="button" class="btn btn-primary" onclick="return updateOperator();">{{ adminLang.common_save_changes_txt}}</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.modal-content --> 
+</div>
+</div>
+</div>
+{% endblock %}
+{% block footerscripts %} 
+<!--begin::Page Vendors --> 
+
+{% include "admin/Eventgroup/lang/lang.twig" %} 
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-admin-operator.js" type="text/javascript"></script> 
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

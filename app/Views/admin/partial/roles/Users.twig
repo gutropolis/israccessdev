@@ -1,0 +1,33 @@
+
+
+<!-- BEGIN: Users  -->
+
+{% set is_user_add  = 'N'  %}
+{% set is_user_edit = 'N'  %}
+{% set is_user_del  = 'N'  %}
+{% set is_user_allowed  = 'N'  %}
+
+{% set user_add_val   = role_id~'_'~20~'_' ~1  %}
+{% set user_edit_val  = role_id~'_'~20~'_' ~2  %}
+{% set user_del_val   = role_id~'_'~20~'_' ~3  %}
+
+{% if user_add_val  in assignedModulesArray %}
+{% set is_user_add = 'Y'  %}
+{% set is_user_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if user_edit_val  in assignedModulesArray %}
+{% set is_user_edit = 'Y'  %}
+{% set is_user_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if user_del_val  in assignedModulesArray %}
+{% set is_user_del = 'Y'  %}
+{% set is_user_allowed  = 'Y'  %}
+{% endif  %}
+
+
+<!-- End: Users  -->
+
+<h1>Users page included</h1>
+

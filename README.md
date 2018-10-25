@@ -1,2 +1,2 @@
-# israccessdev
-Repository for manaing the site code
+MVC framework with Slim, Twig-View and Eloquent ORM
+===================================================

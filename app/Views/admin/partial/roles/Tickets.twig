@@ -1,0 +1,33 @@
+
+
+<!-- BEGIN: Tickets  -->
+
+{% set is_ticket_add  = 'N'  %}
+{% set is_ticket_edit = 'N'  %}
+{% set is_ticket_del  = 'N'  %}
+{% set is_ticket_allowed  = 'N'  %}
+
+{% set ticket_add_val   = role_id~'_'~19~'_' ~1  %}
+{% set ticket_edit_val  = role_id~'_'~19~'_' ~2  %}
+{% set ticket_del_val   = role_id~'_'~19~'_' ~3  %}
+
+{% if ticket_add_val  in assignedModulesArray %}
+{% set is_ticket_add = 'Y'  %}
+{% set is_ticket_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if ticket_edit_val  in assignedModulesArray %}
+{% set is_ticket_edit = 'Y'  %}
+{% set is_ticket_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if ticket_del_val  in assignedModulesArray %}
+{% set is_ticket_del = 'Y'  %}
+{% set is_ticket_allowed  = 'Y'  %}
+{% endif  %}
+
+
+<!-- End: Tickets  -->
+
+<h1>Tickets page included</h1>
+

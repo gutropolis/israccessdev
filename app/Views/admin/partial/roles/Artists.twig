@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Artists  -->
+
+{% set is_artist_add  = 'N'  %}
+{% set is_artist_edit = 'N'  %}
+{% set is_artist_del  = 'N'  %}
+{% set is_artist_allowed  = 'N'  %}
+
+{% set artist_add_val   = role_id~'_'~9~'_' ~1  %}
+{% set artist_edit_val  = role_id~'_'~9~'_' ~2  %}
+{% set artist_del_val   = role_id~'_'~9~'_' ~3  %}
+
+{% if artist_add_val  in assignedModulesArray %}
+{% set is_artist_add = 'Y'  %}
+{% set is_artist_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if artist_edit_val  in assignedModulesArray %}
+{% set is_artist_edit = 'Y'  %}
+{% set is_artist_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if artist_del_val  in assignedModulesArray %}
+{% set is_artist_del = 'Y'  %}
+{% set is_artist_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Artists  -->
+
+

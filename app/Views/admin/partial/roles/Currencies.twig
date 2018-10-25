@@ -1,0 +1,32 @@
+
+
+<!-- BEGIN: Currencies  -->
+
+{% set is_currency_add  = 'N'  %}
+{% set is_currency_edit = 'N'  %}
+{% set is_currency_del  = 'N'  %}
+{% set is_currency_allowed  = 'N'  %}
+
+{% set currency_add_val   = role_id~'_'~4~'_' ~1  %}
+{% set currency_edit_val  = role_id~'_'~4~'_' ~2  %}
+{% set currency_del_val   = role_id~'_'~4~'_' ~3  %}
+
+{% if currency_add_val  in assignedModulesArray %}
+{% set is_currency_add = 'Y'  %}
+{% set is_currency_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if currency_edit_val  in assignedModulesArray %}
+{% set is_currency_edit = 'Y'  %}
+{% set is_currency_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if currency_del_val  in assignedModulesArray %}
+{% set is_currency_del = 'Y'  %}
+{% set is_currency_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Currencies  -->
+
+
+

@@ -1,0 +1,11 @@
+<!-- BEGIN: Dasbhoard  -->
+
+{% set is_cms_view = 'N'  %}
+{% set is_cms_allowed  = 'N'  %}
+{% set cms_view_val  = role_id~'_'~22~'_' ~4  %}
+{% if cms_view_val  in assignedModulesArray %}
+{% set is_cms_view = 'Y'  %}
+{% set is_cms_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Dasbhoard  -->

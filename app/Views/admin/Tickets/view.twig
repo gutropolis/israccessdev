@@ -1,0 +1,335 @@
+{% extends "admin/layouts/layout-admin.twig" %}
+{% block maincontent %}
+<style type="text/css">
+.m-demo .m-demo__preview.m-demo__preview--badge .m-badge {
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+	font-size:18px;
+}
+.circle-tile {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.circle-tile-heading {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    color: #FFFFFF;
+    height: 80px;
+    margin: 0 auto -40px;
+    position: relative;
+    transition: all 0.3s ease-in-out 0s;
+    width: 80px;
+}
+.circle-tile-heading .fa {
+    line-height: 80px;
+}
+.circle-tile-content {
+    padding-top: 50px;
+}
+.circle-tile-number {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 0 15px;
+}
+.circle-tile-description {
+    text-transform: uppercase;
+}
+.circle-tile-footer {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease-in-out 0s;
+}
+.circle-tile-footer:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+.circle-tile-heading.dark-blue:hover {
+    background-color: #2E4154;
+}
+.circle-tile-heading.green:hover {
+    background-color: #138F77;
+}
+.circle-tile-heading.orange:hover {
+    background-color: #DA8C10;
+}
+.circle-tile-heading.blue:hover {
+    background-color: #2473A6;
+}
+.circle-tile-heading.red:hover {
+    background-color: #CF4435;
+}
+.circle-tile-heading.purple:hover {
+    background-color: #7F3D9B;
+}
+.tile-img {
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+}
+
+.dark-blue {
+    background-color: #34495E;
+}
+.green {
+    background-color: #16A085;
+}
+.blue {
+    background-color: #2980B9;
+}
+.orange {
+    background-color: #F39C12;
+}
+.red {
+    background-color: #E74C3C;
+}
+.purple {
+    background-color: #8E44AD;
+}
+.dark-gray {
+    background-color: #7F8C8D;
+}
+.gray {
+    background-color: #95A5A6;
+}
+.light-gray {
+    background-color: #BDC3C7;
+}
+.yellow {
+    background-color: #F1C40F;
+}
+.text-dark-blue {
+    color: #34495E;
+}
+.text-green {
+    color: #16A085;
+}
+.text-blue {
+    color: #2980B9;
+}
+.text-orange {
+    color: #F39C12;
+}
+.text-red {
+    color: #E74C3C;
+}
+.text-purple {
+    color: #8E44AD;
+}
+.text-faded {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.m-badge.m-badge--success {
+    background-color: #34bfa3;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--default {
+    background-color: #cdd2df;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+.m-badge.m-badge--warning {
+    background-color: #f4516c;
+    color: #fff;
+    margin-right: 5px !important;
+    margin-bottom: 15px !important;
+    line-height: 40px !important;
+    width: 40px !important;
+    border-radius: 22px !important;
+    font-size: 18px;
+}
+
+/*
+.hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px;     
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff; }
+.hero-widget .icon { display: block; font-size: 96px; line-height: 96px; margin-bottom: 10px; text-align: center; }
+.hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
+.hero-widget label { font-size: 17px;     color: #fff !important; }
+.hero-widget .options { margin-top: 10px; }
+*/
+
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title "> {{ title }} </h3>
+    </div>
+    <div> </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content"> 
+  
+  <!--Begin::Section-->
+  <div class="row">
+    <div class="col-xl-12"> 
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title"> <span class="m-portlet__head-icon m--hide"> <i class="la la-gear"></i> </span>
+              <h3 class="m-portlet__head-text"> {{ title }} </h3>
+            </div>
+          </div>
+		   <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+              <li class="m-portlet__nav-item" style="display:none"> 
+			   <a href="javascript:void(0);" onclick="downloadOrderReport({{ order_id }})" class="btn btn-info pull-right"><i class="la la-download"></i> {{ adminLang.dashboard_download_report_txt }}</a>  </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!--begin::Form-->
+        <form class="m-form" id="form_add_aud_e">
+          
+           <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+			<!------ Include the above in your HEAD tag ---------->
+			<div class="container bootstrap snippet" style="display:none">
+  <div class="row">
+  
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading dark-blue"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content dark-blue">
+          <div class="circle-tile-description text-faded"> Row Number</div>
+          <div class="circle-tile-number text-faded ">123</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div>
+     
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading red"><i class="fa fa-star fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content red">
+          <div class="circle-tile-description text-faded"> Ticket Type </div>
+          <div class="circle-tile-number text-faded ">Standard</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div> 
+    
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading purple"><i class="fa fa-bars fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content purple">
+          <div class="circle-tile-description text-faded"> Seat From </div>
+          <div class="circle-tile-number text-faded ">1</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading orange "><i class="fa fa-cog fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content orange">
+          <div class="circle-tile-description text-faded"> Seat To </div>
+          <div class="circle-tile-number text-faded ">10</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading green"><i class="fa fa-indent fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content green">
+          <div class="circle-tile-description text-faded"> Total Quantity </div>
+          <div class="circle-tile-number text-faded ">125</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-2 col-sm-6">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading blue"><i class="fa fa-tags fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content blue">
+          <div class="circle-tile-description text-faded"> Remaining Seats </div>
+          <div class="circle-tile-number text-faded ">15</div>
+          <a class="circle-tile-footer" >&nbsp;</i></a>
+        </div>
+      </div>
+    </div>
+    
+  </div> 
+</div>  
+	
+	
+
+   
+
+                
+			
+			<div class="container">
+         {{ seats_list|raw }}
+			</div>
+			
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+              <div class="row">
+                <div class="col-lg-2"><button type="button" onClick="history.back(-1)" class="btn btn-secondary">{{ adminLang.order_go_back_txt }}</button></div>
+                <div class="col-lg-10">
+                 
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <!--end::Form--> 
+      </div>
+      <!--end::Portlet--> 
+      
+      <!--begin::Portlet--> 
+      
+      <!--end::Portlet--> 
+    </div>
+  </div>
+</div>
+
+<!-- Modal --> 
+
+<!-- Modal --> 
+<!-- Model --> 
+
+<!-- Start Model --> 
+
+<!-- End Model --> 
+{% endblock %}
+{% block footerscripts %} 
+<script>
+localStorage.clear();
+</script>
+<!--begin::Page Vendors --> 
+<script src="{{ base_url() }}/assets/admin/dynamic_datatables/data-ajax-admin-tickets.js" type="text/javascript"></script>
+<!--end::Page Snippets --> 
+<!--   {% block addfooter %}{% endblock %} --> 
+{% endblock %} 

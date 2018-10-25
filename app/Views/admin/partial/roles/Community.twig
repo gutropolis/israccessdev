@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Community  -->
+
+{% set is_community_add  = 'N'  %}
+{% set is_community_edit = 'N'  %}
+{% set is_community_del  = 'N'  %}
+{% set is_community_allowed  = 'N'  %}
+
+{% set community_add_val   = role_id~'_'~24~'_' ~1  %}
+{% set community_edit_val  = role_id~'_'~24~'_' ~2  %}
+{% set community_del_val   = role_id~'_'~24~'_' ~3  %}
+
+{% if community_add_val  in assignedModulesArray %}
+{% set is_community_add = 'Y'  %}
+{% set is_community_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if community_edit_val  in assignedModulesArray %}
+{% set is_community_edit = 'Y'  %}
+{% set is_community_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if community_del_val  in assignedModulesArray %}
+{% set is_community_del = 'Y'  %}
+{% set is_community_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Community  -->
+
+

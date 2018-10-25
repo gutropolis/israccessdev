@@ -1,0 +1,31 @@
+
+
+<!-- BEGIN: Categories  -->
+
+{% set is_category_add  = 'N'  %}
+{% set is_category_edit = 'N'  %}
+{% set is_category_del  = 'N'  %}
+{% set is_category_allowed  = 'N'  %}
+
+{% set category_add_val   = role_id~'_'~7~'_' ~1  %}
+{% set category_edit_val  = role_id~'_'~7~'_' ~2  %}
+{% set category_del_val   = role_id~'_'~7~'_' ~3  %}
+
+{% if category_add_val  in assignedModulesArray %}
+{% set is_category_add = 'Y'  %}
+{% set is_category_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if category_edit_val  in assignedModulesArray %}
+{% set is_category_edit = 'Y'  %}
+{% set is_category_allowed  = 'Y'  %}
+{% endif  %}
+
+{% if category_del_val  in assignedModulesArray %}
+{% set is_category_del = 'Y'  %}
+{% set is_category_allowed  = 'Y'  %}
+{% endif  %}
+
+<!-- End: Categories  -->
+
+
