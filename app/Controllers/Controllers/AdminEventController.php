@@ -263,7 +263,17 @@ class AdminEventController extends Base
 		   $event->booking_fee = $booking_fee;
 		   $event->display_order = $display_order;
 		   $event->adv_image = $this->uploadEventAds();
-		   $event->commission_fee = $commission_fee;
+           $event->commission_fee = $commission_fee;
+
+
+           if($event->seats_on_map == 'Y'){
+
+		   	//load auditorium skeletton from auditorium 
+		   		$map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
+		   		// Save the Digital Map
+		   		$event->auditorium_seats_map = $map;   		
+           }
+
 		   $event->save();	
 		   
 		   $event_id = $event->id; // Event id after save
