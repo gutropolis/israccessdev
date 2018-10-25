@@ -78,10 +78,13 @@ var DatatableRemoteAjaxDemoCat = {
 					if(IS_AUDITORIUM_EDIT == 'Y' ){
 						var edit_lnk = edit_link;
 					}
+
+					var aud_map_link = '\t\t\t\t\t\t<a  href="javascript:void(0);" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Digital Map" onclick="digital_map('+[t.id]+')" >\t\t\t\t\t\t\t<i class="la la-map-marker" style="color:red"></i>\t\t\t\t\t\t</a>\t\t\t\t\t';
+					
 					if(IS_AUDITORIUM_DEL == 'Y'){
 						var del_lnk = del_link;
 					}
-                    return edit_lnk+' '+del_lnk;
+                    return edit_lnk+' '+del_lnk+' '+aud_map_link;
                 }
             }]
         }), $("#refresh_table").on('click', function(){
@@ -252,7 +255,9 @@ function delete_function(id){
    $('#modal-delete').modal('show');
 }
 
-
+function digital_map(id){
+	window.location.href= "/admin/auditoriums/editDigitalMap/"+id;
+}
 
 
 
