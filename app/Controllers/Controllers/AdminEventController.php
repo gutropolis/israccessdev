@@ -272,6 +272,18 @@ class AdminEventController extends Base
 		   		$map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
 		   		// Save the Digital Map
 		   		$event->auditorium_seats_map = $map;   		
+
+                $ev_aud_map = Models\EventAuditoriumMap::where('event_id', $id)->first()->id;
+                if($ev_aud_map){
+                    
+                }else {
+
+                    $new_ev_aud_map = new Models\EventAuditoriumMap();
+                    $new_ev_aud_map->event_id= $id;
+                    $new_ev_aud_map->auditorium_map = $map;
+                    $new_ev_aud_map->save();
+                }
+
            }
 
 		   $event->save();	
@@ -371,6 +383,9 @@ class AdminEventController extends Base
 						   'commission_fee' => $commission_fee);
 						   'auditorium_seats_map' => $map);
 		   $event = Models\Event::where('id', '=', $id)->update($data);	
+
+                           //update event_auditorium_map table
+                    Models\EventAuditoriumMap::where('event_id', $id)->update(array('auditorium_map' => $map));
 		   
 		   $event_id = $id; // Event id 
 		   if($event_id)
