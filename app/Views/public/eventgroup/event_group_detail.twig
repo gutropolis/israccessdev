@@ -218,8 +218,11 @@
 
     </div>
     <!-- modal iframe for digital map -->
-    <div class="modal fade" id="digitalmapframe">
-        <iframe  src=""  style="display:none;height:700px;width:100%;"></iframe>
+    <div class="modal fade" id="digitalmapframe" role="dialog" aria-hidden="true">
+        <iframe  src=""  style="height:700px;width:100%;"></iframe>
+        <div class="col-md-4 center-block">
+            <button type="button" class="btn btn-primary" data-dismiss="modal"  data-toggle="modal" data-target="#digitalmapframe" >Close</button>
+        </div>
     </div>
     <!--  Le cadeau spectacle  Section End Here
       ==================================================-->
@@ -778,7 +781,7 @@ commander ne sont pas côte à côte.
 	}
 
     $('.digitalmaptrigger').on('click', function(){
-        var id= $(this).attr('href'); 
+        var id= $(this).attr('data-id'); 
         var iframeurl = "{{ base_url() }}/seatmap/guest?evtid="+id;
         $('#digitalmapframe iframe').attr('src', iframeurl);
     }); 
