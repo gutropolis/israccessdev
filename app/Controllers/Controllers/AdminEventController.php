@@ -316,6 +316,12 @@ class AdminEventController extends Base
 	   $booking_fee = $request->getParam('booking_fee');
 	   $event_ticket_type = $request->getParam('event_ticket_type');
 	   $commission_fee = $request->getParam('commission_fee');
+
+       if($event->seats_on_map == 'Y'){
+
+		   	//load auditorium skeletton from auditorium 
+		   $map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
+	   }
 	   
 	   $eventExist = Models\Event::where('title', '=', $title_event)->where('id', '!=', $id)->first();
 	    if(empty($title_event)){
@@ -363,6 +369,7 @@ class AdminEventController extends Base
 						   'display_order' => $display_order,
 						   'adv_image' => $this->uploadEventAdsUpdate(),
 						   'commission_fee' => $commission_fee);
+						   'auditorium_seats_map' => $map);
 		   $event = Models\Event::where('id', '=', $id)->update($data);	
 		   
 		   $event_id = $id; // Event id 
