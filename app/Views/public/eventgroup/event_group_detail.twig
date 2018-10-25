@@ -157,8 +157,7 @@
 																	
 																	
 																	{%if event.seats_on_map == 'Y' %}
-																		<a href="/digitalmap/{{event.event_id }}">Digital Map</a>
-
+																		<button data-id="{{event.event_id }}" class="digitalmaptrigger" data-toggle="modal" data-target="#digitalmapframe">Digital Map</button>
 																    {%else%}
 																	    {%if event.event_times> 0%}
 																			{%for evtime in event.event_times%}
@@ -217,6 +216,10 @@
         </div>
 
 
+    </div>
+    <!-- modal iframe for digital map -->
+    <div class="modal fade" id="digitalmapframe">
+        <iframe  src=""  style="display:none;height:700px;width:100%;"></iframe>
     </div>
     <!--  Le cadeau spectacle  Section End Here
       ==================================================-->
@@ -773,6 +776,13 @@ commander ne sont pas côte à côte.
     .val('0');
 	$('#tooltipsq').html('');
 	}
+
+    $('.digitalmaptrigger').on('click', function(){
+        var id= $(this).attr('href'); 
+        var iframeurl = "{{ base_url() }}/seatmap/guest?evtid="+id;
+        $('#digitalmapframe iframe').attr('src', iframeurl);
+    }); 
+    
 	</script>
  
 	
