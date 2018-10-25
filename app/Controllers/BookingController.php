@@ -3118,6 +3118,8 @@ public function downloadPDF($request, $response){
 	public function eventBookings($request, $response){
 		//booking from digital map 
 		$jsonData = array('status' => 'succes');
+
+		
 		return $response->withHeader('Content-type','application/json')->write(json_encode($jsonData)); exit();	
 	}
 }
