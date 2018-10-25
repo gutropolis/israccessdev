@@ -329,12 +329,6 @@ class AdminEventController extends Base
 	   $event_ticket_type = $request->getParam('event_ticket_type');
 	   $commission_fee = $request->getParam('commission_fee');
 
-       if($event->seats_on_map == 'Y'){
-
-		   	//load auditorium skeletton from auditorium 
-		   $map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
-	   }
-	   
 	   $eventExist = Models\Event::where('title', '=', $title_event)->where('id', '!=', $id)->first();
 	    if(empty($title_event)){
 		   $isError = true;
@@ -360,7 +354,15 @@ class AdminEventController extends Base
 		   $booking_fee = ($booking_fee == '') ? 0 : $booking_fee;
 		   $commission_fee = ($commission_fee == '') ? 0.00 : $commission_fee;
 		  // update events table
-		   $data = array('title' => $title_event,
+          
+           if($event->seats_on_map == 'Y'){
+                //load auditorium skeletton from auditorium 
+               $map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
+               //update event_auditorium_map table
+               Models\EventAuditoriumMap::where('event_id', $id)->update(array('auditorium_map' => $map));
+
+
+                $data = array('title' => $title_event,
 		                   'date' => mysql_date($date_event),
 		                   'updated_at' => date('Y-m-d H:i:s'),
 						   'eventgroup_id' => $eventgroup_id,
@@ -380,12 +382,36 @@ class AdminEventController extends Base
 						   'booking_fee' => $booking_fee,
 						   'display_order' => $display_order,
 						   'adv_image' => $this->uploadEventAdsUpdate(),
-						   'commission_fee' => $commission_fee);
-						   'auditorium_seats_map' => $map);
-		   $event = Models\Event::where('id', '=', $id)->update($data);	
+						   'commission_fee' => $commission_fee,
+						   'auditorium_seats_map' => $map );
+           }else {
+                            $data = array('title' => $title_event,
+		                   'date' => mysql_date($date_event),
+		                   'updated_at' => date('Y-m-d H:i:s'),
+						   'eventgroup_id' => $eventgroup_id,
+						   'city_id' => $city_id,
+						   'auditorium_id' => $auditorium_id,
+						   'artist_name' => $artist_name,
+						   'author_name' => $author_name,
+						   'productor_name' => $productor_name,
+						   'director_name' => $director_name,
+						   'description' => htmlspecialchars($description),
+						   'contributor_name' => $contributor_name,
+						   'contributor_description' => htmlspecialchars($contributor_description),
+						   'section' => $section,
+						   'status' => $status,
+						   'event_ticket_type' => $event_ticket_type,
+						   'seats_on_map' => $seats_on_map,
+						   'booking_fee' => $booking_fee,
+						   'display_order' => $display_order,
+						   'adv_image' => $this->uploadEventAdsUpdate(),
+						   'commission_fee' => $commission_fee,
+           }
+	   
+		  
+           
+           $event = Models\Event::where('id', '=', $id)->update($data);	
 
-                           //update event_auditorium_map table
-                    Models\EventAuditoriumMap::where('event_id', $id)->update(array('auditorium_map' => $map));
 		   
 		   $event_id = $id; // Event id 
 		   if($event_id)
