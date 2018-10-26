@@ -25,15 +25,16 @@
   <div class="row">
     <div class="col-xl-12"> 
       <!--begin::Portlet-->
-       <table> 
+       <table class="table" > 
          <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Seat Number</th>
                 <th>Section</th>
                 <th>Range</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Actions</th>
             <tr/>
          </thead>
         <tbody>
@@ -45,6 +46,7 @@
             <td>{{seat.row}}</td>
             <td>{{seat.price}}</td>
             <td>{{seat.status}}</td>
+            <td><a href="#"<i class="la la-edit"></i></a></td>
         </tr>
         {% endfor %}
         </tbody>
