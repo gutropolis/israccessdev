@@ -60,7 +60,7 @@
                 <td>
                     <select class="seatstatus">
                         <option value="standard">Standard</option>
-                        <option value="reserved">Reserved</option>
+                        <option value="reserve">Reserve</option>
                         <option value="invitation">Invitation</option>
                         <option value="operator">Operator</option>
                     </select>
@@ -86,6 +86,7 @@
         var edit = "#edit_"+id;
         $(show).hide();
         $(edit).show();
+
     }
 
     function updateseat(sid, evt){
@@ -104,12 +105,17 @@
             console.log(data);
 
             $(show).find('.seatprice').text(seat_price);
-            $(show).find('.seatstatus').text(seat_price);
-
-            $(show).show();
+            $(show).find('.seatstatus').text(seat_status);
+            $(show).show().attr('style','border:2px solid #29c129');
             $(rowid).hide();
         });
+
     }
+    
+    $('table a').on('click' , function(e){
+        e.preventDefault();
+        return false;
+    });
 
         
 </script>

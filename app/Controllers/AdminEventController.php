@@ -4197,13 +4197,170 @@ public function seatTypeChangeSelection($row_id){
         return $this->render($response, ADMIN_VIEW.'/Event/digitalseatlisting.twig',$params);
     }
 
-
+    /**
+     * Update Seat table 
+     * Then update back all jsons
+     *
+     *
+     */
     public function updateDigitalSeat($request, $response, $arg){
 
          $seat_id = $arg['id'];
          $event_id = $request->getParam('event_id');
          $price = $request->getParam('price');
          $status = $request->getParam('status');
+
+
+         //update json in eventauditoriummap 
+         
+         $auditorium_map  = Models\EventAuditoriumMap::where('event_id', $event_id)->first()->auditorium_map;
+         
+
+         $decoded = json_decode($auditorium_map, true);
+
+
+         //find the seat to update it
+
+         /* to update seat need to update tarifColor so lets check all pricea and status setup in auditorium map */
+            // tarif as price, color and type as status
+
+         
+         $ticketfound = false;
+         $newtarifcolor = "#".substr(str_shuffle('abcdef0123456789'), 0, 6);
+
+
+         foreach($decoded['billets'] as $key => $billet){
+
+            //remove the current seat from all billets first
+             
+                for($i=0; $i < count($billet['seats']); $i++){
+                    if($billet['seats'][$i] == $seat_id){
+                        unset($decoded['billets'][$key]['seats'][$i]);
+                    }
+
+
+                    $decoded['billets'][$key]['seats'] = array_values($decoded['billets'][$key]['seats']);
+                }
+
+             //find if any billets record may match the new price and status
+                if($decoded['billets'][$key]['tarif'] == $price && $decoded['billets'][$key]['type'] == $status){
+                    $decoded['billets'][$key]['seats'][]= intval($seat_id);
+
+                    $decoded['billets'][$key]['seats'] = array_values($decoded['billets'][$key]['seats']);
+                    $ticketfound = true;
+                    $newtarifcolor = $decoded['billets'][$key]['color'];
+                }
+         }
+
+
+
+         if(!$ticketfound){
+
+            //if not any ticket match ,no choice we have to create a new ticket then
+             $newbillet = array(
+                 'libelle' => 'Billet',
+                 'color' => $newtarifcolor,
+                 'tarif' => intval($price),
+                 'seats' => array(),
+                 'type' => $status
+             );
+
+             $newbillet['seats'][] = intval($seat_id);
+
+             //update seat json status 
+             foreach($decoded['sections'] as $a => $section){
+
+
+                 for($j=0; $j < count($section['_seats']); $j++){
+                     if($section['_seats'][$j]['_id'] == $seat_id){
+
+                         $decoded['sections'][$a]['_seats'][$j]['tarifColor'] = $newtarifcolor;
+                     }
+                 }
+             }
+
+             $decoded['billets'][] = $newbillet;
+
+         }else {
+             //update seat json status 
+             foreach($decoded['sections'] as $a => $section){
+
+                 for($j=0; $j < count($section['_seats']); $j++){
+                     if($section['_seats'][$j]['_id'] == $seat_id){
+
+                         $decoded['sections'][$a]['_seats'][$j]['tarifColor'] = $newtarifcolor;
+                     }
+                 }
+             }
+         }
+
+
+  
+         //now save the json in eventauditoriummap table
+
+         $new_json_encoded = json_encode($decoded);
+
+         Models\EventAuditoriumMap::where('event_id' ,$event_id)->update(array('auditorium_map' => $new_json_encoded));
+
+
+         //updating  auditorium seat map table
+
+
+
+           //var_dump($decoded_map->billets); exit;
+           $total_number_seats = 0;
+
+           $total_number_sections = count($decoded['sections']);
+
+           //calculate number of sections 
+           foreach($decoded['sections'] as $section){
+                $total_number_seats += ($section['_nbRange'] *  $section['_nbSeat']);
+           }
+
+
+
+
+	   $asm = Models\AuditoriumSeatsMap::where('event_id', $event_id)->first()->id;
+		   
+	   if($asm){
+
+		   $auditorium_seats_map = Models\AuditoriumSeatsMap::where('event_id', $event_id)->update(
+		   	 array(
+		   	 	'billets_json' => json_encode($decoded['billets']) ,
+		   	 	'labels_json' => json_encode($decoded['labels']) , 
+		   	 	'sections_json' => json_encode($decoded['sections']),
+		   	 	'total_number_seats' => $total_number_seats,
+		   	    'total_number_sections' => $total_number_sections
+		   ));
+
+
+	   }else {
+
+	   		$auditorium_seats_map = new Models\AuditoriumSeatsMap;
+
+		   $auditorium_seats_map->event_id = $event_id;
+		   $auditorium_seats_map->billets_json = json_encode($decoded['billets']);
+		   $auditorium_seats_map->labels_json = json_encode($decoded['labels']);
+		   $auditorium_seats_map->sections_json = json_encode($decoded['sections']);
+		   $auditorium_seats_map->total_number_seats = $total_number_seats;
+		   $auditorium_seats_map->total_number_sections = $total_number_sections;
+
+
+		   $auditorium_seats_map->save();
+       }
+	   
+
+         
+          
+         //update seat table
+         $data = array(
+             'price' => $price,
+             'status' => $status
+         );
+
+         Models\Seats::where('unique_id', $seat_id)->where('event_id',$event_id)->update($data);
+
+
          
          $params = array(
                 'event_id' => $event_id,
