@@ -4178,8 +4178,7 @@ public function seatTypeChangeSelection($row_id){
         $event_id = $arg['id'];
 
         //get seats
-        $seats = Models\Seats::where('event_id', $event_id)->get();
-
+        $seats = Models\Seats::where('event_id', $event_id)->get()->orderBy('area', 'ASC');
 
         //get event name 
         $event = Models\Event::where('id',$event_id)->first();

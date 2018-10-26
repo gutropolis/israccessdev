@@ -25,11 +25,30 @@
   <div class="row">
     <div class="col-xl-12"> 
       <!--begin::Portlet-->
-        
+       <table> 
+         <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Range</th>
+                <th>Price</th>
+                <th>Status</th>
+            <tr/>
+         </thead>
+        <tbody>
         {% for seat in seats %}
-            <p>{{seat.name}}  {{seat.unique_id}} {{seat.status}}</p>
+        <tr>
+            <td>{{seat.unique_id}}</td>
+            <td>{{seat.name}}</td>
+            <td>{{seat.area}}</td>
+            <td>{{seat.row}}</td>
+            <td>{{seat.price}}</td>
+            <td>{{seat.status}}</td>
+        </tr>
         {% endfor %}
-        
+        </tbody>
+       </table> 
       <!--end::Portlet--> 
     </div>
   </div>
