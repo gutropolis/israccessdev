@@ -3546,6 +3546,13 @@ $lang['dashboard_no_of_visitors'] = 'Nombre de visiteurs';
 $lang['dashboard_no_of_seat'] = 'Nombre de sièges'; 
 
  
+/*------------------------------------------------------------
+   Listing for auditorim map 
+------------------------------------------------------------*/
+
+$lang['edit_digital_seat_txt'] = 'Seats of Digital Map';
+
+
 
 /*------------------------------------------------------------
     Event Coupon

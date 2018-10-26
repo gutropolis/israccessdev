@@ -4168,14 +4168,33 @@ public function seatTypeChangeSelection($row_id){
 	}
 
 	
+    /**
+     * Page digital map seat listing
+     *
+     *
+     */
+
     public function digitalSeatListing($request , $response, $arg){
         $event_id = $arg['id'];
 
+        //get seats
         $seats = Models\Seats::where('event_id', $event_id)->get();
-        
-        $params = array('event_id' => $event_id,
+
+
+        //get event name 
+        $event = Models\Event:where('id',$event_id)->first();
+
+        //auditorium name 
+        $auditorium = Models\Auditorium::where('id',$event->auditorium_id)->name;
+
+        $params = array(
+            'event_id' => $event_id,
+            'event_name'=> $event->name,
+            'auditorium_name' => $auditorium,
+            'title' => $this->lang['edit_digital_seat_txt'];
             'seats' => $seats
         ); 
+
         return $this->render($response, ADMIN_VIEW.'/Event/digitalseatlisting.twig',$params);
     }
 	

@@ -21,11 +21,15 @@
 </div>
 <!-- END: Subheader -->
 <div class="m-content"> 
-  
+    <h4>Seats for {{event_name}} in {{auditorium_name}}<h4> 
   <!--Begin::Section-->
   <div class="row">
     <div class="col-xl-12"> 
       <!--begin::Portlet-->
+        
+        {% for seat in seats %}
+            <p>{{seat.name}}  {{seat.unique_id}} {{seat.status}}</p>
+        {% endfor %}
         
       <!--end::Portlet--> 
     </div>

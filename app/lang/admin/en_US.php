@@ -3592,6 +3592,11 @@ $lang['dashboard_no_of_seat'] = 'Number of seats';
 
 
 
+/*------------------------------------------------------------
+   Listing for auditorim map 
+------------------------------------------------------------*/
+
+$lang['edit_digital_seat_txt'] = 'Seats of Digital Map';
 
  
 
