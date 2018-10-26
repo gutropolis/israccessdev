@@ -4200,10 +4200,18 @@ public function seatTypeChangeSelection($row_id){
 
     public function updateDigitalSeat($request, $response, $arg){
 
-        
-
+         $seat_id = $arg['id'];
+         $event_id = $request->getParam('event_id');
+         $price = $request->getParam('price');
+         $status = $request->getParam('status');
          
-         $params = array();
+         $params = array(
+                'event_id' => $event_id,
+                'seat_id' => $seat_id,
+                'price' => $price,
+                'status' => $status 
+         );
+
 		 return $response
             ->withHeader('Content-type','application/json')
             ->write(json_encode($params));

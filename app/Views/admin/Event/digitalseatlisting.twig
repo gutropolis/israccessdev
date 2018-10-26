@@ -65,7 +65,7 @@
                         <option value="operator">Operator</option>
                     </select>
                 </td>
-                <td><a href="#" class="btn btn-primary btn-sm" onclick="updateseat({{seat.unique_id}});">Save</a></td>
+                <td><a href="#" class="btn btn-primary btn-sm" onclick="updateseat({{seat.unique_id}}, {{event_id}});">Save</a></td>
             </tr>
             {% endfor %}
             </tbody>
@@ -88,7 +88,7 @@
         $(edit).show();
     }
 
-    function updateseat(sid){
+    function updateseat(sid, evt){
         var show = "#show_"+sid;
         var rowid = "#edit_"+sid;
         var seat_price = $(rowid).find('.seatprice').val();
@@ -99,7 +99,7 @@
         $.ajax({
             url : '/admin/events/updateseatalone/'+sid,
             method:'POST',
-            data : { "price" : seat_price, "status" : seat_status},
+            data : { "price" : seat_price, "status" : seat_status, "event_id" : evt },
         }).done(function(data){
             console.log(data);
 
