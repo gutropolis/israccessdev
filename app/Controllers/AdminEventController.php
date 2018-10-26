@@ -4182,16 +4182,16 @@ public function seatTypeChangeSelection($row_id){
 
 
         //get event name 
-        $event = Models\Event:where('id',$event_id)->first();
+        $event = Models\Event::where('id',$event_id)->first();
 
         //auditorium name 
-        $auditorium = Models\Auditorium::where('id',$event->auditorium_id)->name;
+        $auditorium = Models\Auditorium::where('id',$event->auditorium_id)->first()->name;
 
         $params = array(
             'event_id' => $event_id,
-            'event_name'=> $event->name,
-            'auditorium_name' => $auditorium,
-            'title' => $this->lang['edit_digital_seat_txt'];
+            'eventname'=> $event->title,
+            'auditoriumname' => $auditorium,
+            'title' => $this->lang['edit_digital_seat_txt'],
             'seats' => $seats
         ); 
 
