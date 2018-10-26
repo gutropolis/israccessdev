@@ -3667,7 +3667,7 @@ public function seatTypeChangeSelection($row_id){
 			   					$newseat->price = $price_seat;
 			   					$newseat->status = $type[$seat->tarifColor];
                                 $newseat->hidden = $seat->_hidden;
-                                $newseat->event_id => $event_id;
+                                $newseat->event_id = $event_id;
 
 			   					$newseat->save();
 			   				}
