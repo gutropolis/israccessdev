@@ -46,8 +46,8 @@
                 <td>{{seat.name}}</td>
                 <td>{{seat.area}}</td>
                 <td>{{seat.row}}</td>
-                <td>{{seat.price}}</td>
-                <td>{{seat.status}}</td>
+                <td class="seatprice" >{{seat.price}}</td>
+                <td class="seatstatus" >{{seat.status}}</td>
                 <td><a href="#"<i class="la la-edit" onclick="editseat({{seat.unique_id}});"></i></a></td>
             </tr>
 
@@ -89,11 +89,26 @@
     }
 
     function updateseat(sid){
+        var show = "#show_"+sid;
         var rowid = "#edit_"+sid;
         var seat_price = $(rowid).find('.seatprice').val();
         var seat_status= $(rowid).find('.seatstatus').val();
         console.log(seat_price);
         console.log(seat_status);
+        
+        $.ajax({
+            url : '/admin/events/updateseatalone/'+sid,
+            method:'POST',
+            data : { "price" : seat_price, "status" : seat_status},
+        }).done(function(data){
+            console.log(data);
+
+            $(show).find('.seatprice').text(seat_price);
+            $(show).find('.seatstatus').text(seat_price);
+
+            $(show).show();
+            $(rowid).hide();
+        });
     }
 
         

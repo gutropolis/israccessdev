@@ -4196,5 +4196,17 @@ public function seatTypeChangeSelection($row_id){
 
         return $this->render($response, ADMIN_VIEW.'/Event/digitalseatlisting.twig',$params);
     }
+
+
+    public function updateDigitalSeat($request, $response, $arg){
+
+        
+
+         
+         $params = array();
+		 return $response
+            ->withHeader('Content-type','application/json')
+            ->write(json_encode($params));
+    }
 	
 }
