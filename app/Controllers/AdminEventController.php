@@ -3573,7 +3573,7 @@ public function seatTypeChangeSelection($row_id){
 	public function saveAuditoriumDigitalMap($request, $response){
 		
 		
-	    $event_id = $request->getParam('event_id');
+	   $event_id = $request->getParam('event_id');
 
 	   $auditorium_key = $request->getParam('auditorium_key');
 
@@ -3590,8 +3590,6 @@ public function seatTypeChangeSelection($row_id){
 	   foreach($decoded_map->sections as $section){
 	   		$total_number_seats += ($section->_nbRange *  $section->_nbSeat);
 	   }
-
-
 
 	   /* save / update auditorium map */ 
 	   //get the auditorium id
@@ -3645,7 +3643,8 @@ public function seatTypeChangeSelection($row_id){
 				   					'auditorium_id' => $auditorium_id,
 				   					'price' => $price_seat,
 			   						'status' => $type[$seat->tarifColor],
-			   						'hidden' => $seat->_hidden
+			   						'hidden' => $seat->_hidden,
+                                    'event_id' => $event_id
 		   						));
 		   					}
 		   					
@@ -3667,7 +3666,8 @@ public function seatTypeChangeSelection($row_id){
 			   					$newseat->auditorium_id = $auditorium_id;
 			   					$newseat->price = $price_seat;
 			   					$newseat->status = $type[$seat->tarifColor];
-			   					$newseat->hidden = $seat->_hidden;
+                                $newseat->hidden = $seat->_hidden;
+                                $newseat->event_id => $event_id;
 
 			   					$newseat->save();
 			   				}
