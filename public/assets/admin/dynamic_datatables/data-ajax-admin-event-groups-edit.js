@@ -218,7 +218,7 @@ var DatatableRemoteAjaxDemoEvents = {
 
                 field: "Actions",
 
-                width: 200,
+                width: 250,
 
                 title: "Actions",
 
@@ -237,7 +237,9 @@ var DatatableRemoteAjaxDemoEvents = {
 					}else{
 
 						var event_aud_map_link = '\t\t\t\t\t\t<a  href="javascript:void(0);" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Digital Map" onclick="no_set_map('+[t.id]+')" >\t\t\t\t\t\t\t<i class="la la-map-marker" style="color:red"></i>\t\t\t\t\t\t</a>\t\t\t\t\t';
+						var listing = '\t\t\t\t\t\t<a  href="javascript:void(0);" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Digital Map" onclick="listing_page('+[t.id]+')" >\t\t\t\t\t\t\t<i class="fa fa-th-list" style="color:red"></i>\t\t\t\t\t\t</a>\t\t\t\t\t';
 
+                        event_aud_map_link = event_aud_map_link + listing;
 					}
 
 					var edit_lnk = '';
@@ -3360,23 +3362,6 @@ function removeEventCoupon(coupon_id){
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function listing_page(id){
+    window.location.href = "/admin/events/digitalseatlisting/"+id;
+}

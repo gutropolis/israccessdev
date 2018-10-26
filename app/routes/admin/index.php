@@ -839,6 +839,8 @@ $app->group('/admin', function () use ($app) {
 	 $app->get("/events/eventDigitalMapEdit/{id}", "App\Controllers\AdminEventController:eventDigitalMapEdit");
 
 
+     $app->get("/events/digitalseatlisting/{id}" , "App\Controllers\AdminEventController:digitalSeatListing"); //new listing requested as alternative to modify seat datas
+
 
 	 $app->post("/saveAuditoriumDigitalMap", "App\Controllers\AdminEventController:saveAuditoriumDigitalMap");
 

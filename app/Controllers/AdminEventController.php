@@ -4168,6 +4168,15 @@ public function seatTypeChangeSelection($row_id){
 	}
 
 	
-	
+    public function digitalSeatListing($request , $response, $arg){
+        $event_id = $arg['id'];
+
+        $seats = Models\Seats::where('event_id', $event_id)->get();
+        
+        $params = array('event_id' => $event_id,
+            'seats' => $seats
+        ); 
+        return $this->render($response, ADMIN_VIEW.'/Event/digitalseatlisting.twig',$params);
+    }
 	
 }
