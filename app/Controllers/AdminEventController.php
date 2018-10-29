@@ -269,26 +269,6 @@ class AdminEventController extends Base
 		   $event->adv_image = $this->uploadEventAds();
 		   $event->commission_fee = $commission_fee;
 
-		   if($event->seats_on_map == 'Y'){
-
-		   	//load auditorium skeletton from auditorium 
-		   		$map = Models\Auditorium::where('id', $event->auditorium_id)->first()->auditorium_map;
-		   		// Save the Digital Map
-		   		$event->auditorium_seats_map = $map;   		
-
-                $ev_aud_map = Models\EventAuditoriumMap::where('event_id', $id)->first()->id;
-                if($ev_aud_map){
-                    
-                }else {
-
-                    $new_ev_aud_map = new Models\EventAuditoriumMap();
-                    $new_ev_aud_map->event_id= $id;
-                    $new_ev_aud_map->auditorium_map = $map;
-                    $new_ev_aud_map->save();
-                }
-
-           }
-
 
 		   $event->save();	
 		   
@@ -300,8 +280,27 @@ class AdminEventController extends Base
 		   $this->saveEventRoles($event_id); // Save to event roles table
 		   $this->saveAudEventSeats($event_id, $auditorium_id, $seats_on_map); // Save auditorium manual seats.
 
-		      		//sync with  event auditorium map table
-		   		if($event->seats_on_map == 'Y'){
+		   	if($event->seats_on_map == 'Y'){
+
+			   	//load auditorium skeletton from auditorium 
+			   		$map = Models\Auditorium::where('id', $auditorium_id)->first()->auditorium_map;
+
+			   		// Save the Digital Map
+			   		$event->auditorium_seats_map = $map;   		
+
+	                $ev_aud_map = Models\EventAuditoriumMap::where('event_id', $id)->first()->id;
+
+	                if($ev_aud_map){
+	                    
+	                }else {
+
+	                    $new_ev_aud_map = new Models\EventAuditoriumMap();
+	                    $new_ev_aud_map->event_id= $event_id;
+	                    $new_ev_aud_map->auditorium_map = $map;
+	                    $new_ev_aud_map->save();
+	                }
+
+
 			   		$digitalMapTablePKID = Models\EventAuditoriumMap::where('event_id', '=', $event_id)->first()->id;
 
 			   		if($digitalMapTablePKID){
@@ -321,7 +320,9 @@ class AdminEventController extends Base
 					   $aud->save();
 			   		}
 			   	}
-		  
+
+
+			  
 		   return $response
             ->withHeader('Content-type','application/json')
             ->write(json_encode(array('status' => TRUE))); 
