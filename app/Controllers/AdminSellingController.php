@@ -2478,7 +2478,7 @@ class AdminSellingController extends Base
 		{
 			$jsonData = array(
 						'status' => '0',
-						'msg' => 'Email Already Exist!!'
+						'msg' => "L'email existe déjà !"
 					);
 					return $response->withHeader('Content-type', 'application/json')->write(json_encode($jsonData));
 					exit;
@@ -2486,7 +2486,7 @@ class AdminSellingController extends Base
 		else{
 			$jsonData = array(
 						'status' => '1',
-						'msg' => 'Email not Exist!!'
+						'msg' => "Email n'existe pas !!"
 					);
 					return $response->withHeader('Content-type', 'application/json')->write(json_encode($jsonData));
 					exit;

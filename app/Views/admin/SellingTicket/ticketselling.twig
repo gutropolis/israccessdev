@@ -560,11 +560,13 @@ function checkemail()
 						{
 							//alert(data.msg);
 							$('#pass_hint').html(data.msg);
+							$("#email").addClass('errorClass');
 							this.setCustomValidity(data.msg);
 						}
 						if(data.status==1)
 						{
 						$('#pass_hint').html('');
+						 $("#email").removeClass('errorClass');
 						}
 						});
 	}
@@ -586,6 +588,7 @@ function validateEmail(sEmail) {
 }
 </script>
 <style>
+.errorClass { border:  1px solid red; }
 .dot {
 	  height: 14px;
 	  width: 14px;
