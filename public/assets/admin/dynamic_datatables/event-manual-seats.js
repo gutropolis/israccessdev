@@ -1002,10 +1002,12 @@ function SaveNewMultipleSeats(){
 
 
 
-function sendData(data){
+function sendData(id){
 	
-  var admin_comments = data.value;
-  var seat_id = $('#seat_id').val();
+  var seat_id = id;
+  var comments = "#admin_nots_span_"+id;
+  var admin_comments = $(comments).val();
+
   var formData = 'admin_comments='+admin_comments+'&seat_id='+seat_id;	
   //if(admin_comments.length>0){
     $.ajax({
