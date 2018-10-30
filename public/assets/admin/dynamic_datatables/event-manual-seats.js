@@ -735,6 +735,7 @@ function changePlacement(sel, id){
 }
 
 // Function to view Popup function 
+// Function to view Popup function 
 function view_seat_popup(seat_id)
 {   
     //Ajax Load data from ajax
@@ -748,6 +749,9 @@ function view_seat_popup(seat_id)
 			$('#seat_changed_data_total').html(data['seat_changed_data_total']);
 			$('#seat_refund_data').html(data['seat_refund_data']);
 			$('#seat_refund_data_total').html(data['seat_refund_data_total']);
+			$('#seat_email_button').html(data['seat_email_button']);
+			$('#admin_nots_span').html(data['admin_notes']);
+			$('#seat_id').val(data['seat_id']);
 			$('#seatLogHistoryModel').modal('show'); // show bootstrap modal when complete loaded
         },
         error: function (jqXHR, textStatus, errorThrown)
@@ -998,7 +1002,77 @@ function SaveNewMultipleSeats(){
 
 
 
-
+function sendData(data){
+	
+  var admin_comments = data.value;
+  var seat_id = $('#seat_id').val();
+  var formData = 'admin_comments='+admin_comments+'&seat_id='+seat_id;	
+  //if(admin_comments.length>0){
+    $.ajax({
+        url : "../../events/saveSeatComments",
+        type: "POST",
+		data: formData,
+        dataType: "JSON",
+        success: function(data)
+        {
+			
+			/*swal({
+            title: "Etes vous sûr",
+            text: "You will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: false,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel plx!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        });*/
+			/*swal({
+			title              :  "Etes vous sûr ?",
+              text               :  "Le formulaire sera définitivement perdu !",
+              type               : "warning",
+              showCancelButton   : true,
+              confirmButtonColor : "#DD6B55",
+              confirmButtonText  : "Oui, supprimer",
+              cancelButtonText   :  "Annuler",
+              closeOnCancel      : true
+			 });*/
+			swal({
+				 
+        title: "Succ&egrave;s!",
+        text: 'Commentaire sauvegarde avec succes',
+        type: "success"
+		//html: true
+        //confirmButtonText: "Ok!",
+        //closeOnConfirm: false,
+        //html: true
+    });
+			//swal(
+				 /*title: "Succ&egrave;s!",
+        text: 'Commentaire sauvegard&eacute; avec succ&egrave;s',
+        type: "success",
+        confirmButtonText: "Ok!",
+        closeOnConfirm: false,
+        html: true*/
+								  /*'Succ&egrave;s!',
+								  'Commentaire sauvegard&eacute; avec succ&egrave;s',
+								  'success',
+								  html: true*/
+								  /*swal(
+								   title:  'Succ&egrave;s!',
+								  text : 'Commentaire sauvegardé avec succès',
+								  type : 'success',
+								  html: 'true'
+								);*/	
+								//);			
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+      });
+	//}  
+}
 
 
 

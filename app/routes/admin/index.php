@@ -959,6 +959,9 @@ $app->group('/admin', function () use ($app) {
 
 	 $app->post("/events/saveRowMultipleSeatsUpdate", "App\Controllers\AdminEventController:saveRowMultipleSeatsUpdate");
 
+	 // Save Comments
+	 $app->post("/events/saveSeatComments", "App\Controllers\AdminEventController:saveSeatComments");
+
 
 
 	 // Event Coupon
