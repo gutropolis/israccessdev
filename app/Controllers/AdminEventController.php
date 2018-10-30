@@ -4195,8 +4195,7 @@ public function seatTypeChangeSelection($row_id){
          $status = $request->getParam('status');
 
 
-         //update json in eventauditoriummap 
-         
+         //get json eventauditoriummap 
          $auditorium_map  = Models\EventAuditoriumMap::where('event_id', $event_id)->first()->auditorium_map;
          
 
@@ -4204,7 +4203,6 @@ public function seatTypeChangeSelection($row_id){
 
 
          //find the seat to update it
-
          /* to update seat need to update tarifColor so lets check all pricea and status setup in auditorium map */
             // tarif as price, color and type as status
 
@@ -4279,31 +4277,38 @@ public function seatTypeChangeSelection($row_id){
          }
 
 
-  
-         //now save the json in eventauditoriummap table
 
-         $new_json_encoded = json_encode($decoded);
-
-         Models\EventAuditoriumMap::where('event_id' ,$event_id)->update(array('auditorium_map' => $new_json_encoded));
-
-
-         //updating  auditorium seat map table
-
-
-
-           //var_dump($decoded_map->billets); exit;
            $total_number_seats = 0;
+           $total_seats_available = 0; //new column total seats available
 
            $total_number_sections = count($decoded['sections']);
+
+
+           $type = array(); //Standard , Réservé , invitation , operator
+
+	   		foreach($decoded['billets'] as $billets){
+	   			$type[$billets['color']] = $billets['type'];
+	   		}
 
            //calculate number of sections 
            foreach($decoded['sections'] as $section){
                 $total_number_seats += ($section['_nbRange'] *  $section['_nbSeat']);
+                //count total seats available
+                foreach($section['_seats'] as $seat){
+                    if($seat['_rangeText']){
+                        if($type[$seat['tarifColor']] == 'standard'){
+                            $total_seats_available++;
+                        }
+                    } 
+                }
            }
 
 
+       //now save the json in eventauditoriummap table
+       $new_json_encoded = json_encode($decoded);
+       Models\EventAuditoriumMap::where('event_id' ,$event_id)->update(array('auditorium_map' => $new_json_encoded, 'total_seats_available' => $total_seats_available));
 
-
+       //updating  auditorium seat map table
 	   $asm = Models\AuditoriumSeatsMap::where('event_id', $event_id)->first()->id;
 		   
 	   if($asm){
