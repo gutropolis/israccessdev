@@ -3585,6 +3585,13 @@ public function seatTypeChangeSelection($row_id){
        $total_seats_available = 0;
 	   $total_number_sections = count($decoded_map->sections);
 
+       //count_extra
+       $standard_seats = 0;
+       $reserve_seats = 0;
+       $invitation_seats = 0;
+       $operator_seats = 0;
+       $booked_seats = 0;
+
 	   //calculate number of sections 
 	   foreach($decoded_map->sections as $section){
 	   		$total_number_seats += ($section->_nbRange *  $section->_nbSeat);
@@ -3595,8 +3602,6 @@ public function seatTypeChangeSelection($row_id){
 
 	  $auditorium_id = Models\Event::where('id', $event_id)->first()->auditorium_id;
   
-	 //  Models\Auditorium::where('id', $auditorium_id)->update( array('auditorium_key' => $auditorium_key, 'auditorium_map' => $auditorium_map) );
-
 	   //seats
 	     //prices 
 	   	
@@ -3610,6 +3615,7 @@ public function seatTypeChangeSelection($row_id){
 	   		foreach($decoded_map->billets as $billets){
 	   			$type[$billets->color] = $billets->type;
 	   		}
+
 		
 	   
 	   foreach($decoded_map->sections as $section){
@@ -3622,6 +3628,18 @@ public function seatTypeChangeSelection($row_id){
                         if($type[$seat->tarifColor] == 'standard'){
                             $total_seats_available ++;
                         }
+
+                        switch($type[$seat->tarifColor]){
+                            case 'standard' :
+                                $standard_seats++; break;
+                            case 'reserve':
+                                $reserve_seats++; break;
+                            case 'invitation':
+                                $invitation_seats++; break;
+                            case 'operator':
+                                $operator_seats++;break;
+                        }
+
 		   				//save or updating seats 
 		   				$s  = Models\Seats::where('unique_id' , $seat->_id)->first()->id;
 		   				
@@ -3674,7 +3692,8 @@ public function seatTypeChangeSelection($row_id){
 		   			}
 		   		}
 	   	}
-	   	
+
+       $count_extra = json_encode( array('standard' => $standard_seats, 'reserve' => $reserve_seats, 'operator' => $operator_seats, 'invitation' => $invitation_seats, 'booked'=> $booked_seats)); 
 
 	   $digitalMapTablePKID = Models\EventAuditoriumMap::where('event_id', $event_id)->first()->id;
 
@@ -3682,7 +3701,12 @@ public function seatTypeChangeSelection($row_id){
 
 		    // Update the Digital Map
 
-		   $data = array('auditorium_key' => $auditorium_key, 'auditorium_map' => $auditorium_map, 'total_seats_available' => $total_seats_available);
+           $data = array(
+               'auditorium_key' => $auditorium_key,
+               'auditorium_map' => $auditorium_map,
+               'total_seats_available' => $total_seats_available,
+               'count_extra' => $count_extra
+           );
 
 		   $event = Models\EventAuditoriumMap::where('id', '=', $digitalMapTablePKID)->update($data);	
 
@@ -3701,6 +3725,8 @@ public function seatTypeChangeSelection($row_id){
 	       $aud->auditorium_map  = $auditorium_map;
 
            $aud->total_seats_available = $total_seats_available;
+
+           $aud->count_extra = $count_extra;
 
 		   $aud->save();
 
@@ -4281,6 +4307,13 @@ public function seatTypeChangeSelection($row_id){
            $total_number_seats = 0;
            $total_seats_available = 0; //new column total seats available
 
+           //count_extra
+           $standard_seats = 0;
+           $reserve_seats = 0;
+           $invitation_seats = 0;
+           $operator_seats = 0;
+           $booked_seats = 0;
+
            $total_number_sections = count($decoded['sections']);
 
 
@@ -4299,14 +4332,30 @@ public function seatTypeChangeSelection($row_id){
                         if($type[$seat['tarifColor']] == 'standard'){
                             $total_seats_available++;
                         }
+
+                        switch($type[$seat['tarifColor']]){
+                            case 'standard' :
+                                $standard_seats++; break;
+                            case 'reserve':
+                                $reserve_seats++; break;
+                            case 'invitation':
+                                $invitation_seats++; break;
+                            case 'operator':
+                                $operator_seats++;break;
+                        }
                     } 
                 }
            }
 
+       $count_extra = json_encode( array('standard' => $standard_seats, 'reserve' => $reserve_seats, 'operator' => $operator_seats, 'invitation' => $invitation_seats, 'booked'=> $booked_seats)); 
 
        //now save the json in eventauditoriummap table
        $new_json_encoded = json_encode($decoded);
-       Models\EventAuditoriumMap::where('event_id' ,$event_id)->update(array('auditorium_map' => $new_json_encoded, 'total_seats_available' => $total_seats_available));
+           Models\EventAuditoriumMap::where('event_id' ,$event_id)->update(array(
+               'auditorium_map' => $new_json_encoded,
+               'total_seats_available' => $total_seats_available,
+               'count_extra' => $count_extra
+           ));
 
        //updating  auditorium seat map table
 	   $asm = Models\AuditoriumSeatsMap::where('event_id', $event_id)->first()->id;
