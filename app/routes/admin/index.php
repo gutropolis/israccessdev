@@ -444,7 +444,7 @@ $app->group('/admin', function () use ($app) {
 
 
 
-	 $app->get("/saveAudiMap", "App\Controllers\AdminAuditoriumController:saveAudiMap");
+	 //$app->get("/saveAudiMap", "App\Controllers\AdminAuditoriumController:saveAudiMap");
 
 
 

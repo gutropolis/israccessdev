@@ -3573,18 +3573,16 @@ public function seatTypeChangeSelection($row_id){
 	// Save auditorium Digital Map from admin
 	public function saveAuditoriumDigitalMap($request, $response){
 		
-		
 	   $event_id = $request->getParam('event_id');
 
 	   $auditorium_key = $request->getParam('auditorium_key');
 
 	   $auditorium_map  = $request->getParam('auditorium_map');
 
-
 	   $decoded_map = json_decode($auditorium_map);
 
-	   //var_dump($decoded_map->billets); exit;
 	   $total_number_seats = 0;
+       $total_seats_available = 0;
 	   $total_number_sections = count($decoded_map->sections);
 
 	   //calculate number of sections 
@@ -3600,7 +3598,6 @@ public function seatTypeChangeSelection($row_id){
 	 //  Models\Auditorium::where('id', $auditorium_id)->update( array('auditorium_key' => $auditorium_key, 'auditorium_map' => $auditorium_map) );
 
 	   //seats
-
 	     //prices 
 	   	
 	   		$prices = array();
@@ -3616,16 +3613,16 @@ public function seatTypeChangeSelection($row_id){
 		
 	   
 	   foreach($decoded_map->sections as $section){
-
-
-		   		
 		   		
 		   		foreach($section->_seats as $seat){
 
 
-		   			if($seat->_rangeText){ 
-		   				//save or updating seats 
+		   			if($seat->_rangeText){ //1st line doesn't have seat range
 
+                        if($type[$seat->tarifColor] == 'standard'){
+                            $total_seats_available ++;
+                        }
+		   				//save or updating seats 
 		   				$s  = Models\Seats::where('unique_id' , $seat->_id)->first()->id;
 		   				
 		   				if($s){
@@ -3685,15 +3682,13 @@ public function seatTypeChangeSelection($row_id){
 
 		    // Update the Digital Map
 
-		   $data = array('auditorium_key' => $auditorium_key, 'auditorium_map' => $auditorium_map);
+		   $data = array('auditorium_key' => $auditorium_key, 'auditorium_map' => $auditorium_map, 'total_seats_available' => $total_seats_available);
 
 		   $event = Models\EventAuditoriumMap::where('id', '=', $digitalMapTablePKID)->update($data);	
 
 		   //sync with other tables
 
 	   }else{
-
-		   
 
 		   // Save the Digital Map
 
@@ -3705,11 +3700,9 @@ public function seatTypeChangeSelection($row_id){
 
 	       $aud->auditorium_map  = $auditorium_map;
 
+           $aud->total_seats_available = $total_seats_available;
+
 		   $aud->save();
-
-
-
-
 
 	   }
 
@@ -3745,16 +3738,6 @@ public function seatTypeChangeSelection($row_id){
 
 	   }
 		   
-
-
-
-
-
-	   
-
-
-
-	   
 
 	   return $response
 
