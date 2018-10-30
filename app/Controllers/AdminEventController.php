@@ -3653,8 +3653,8 @@ public function seatTypeChangeSelection($row_id){
 		   						}
 
 		   						Models\Seats::where('unique_id' , $seat->_id)->update(array(
-			   						'name' => $seat->_text,
-				   					'area' => $section->_nbTitle,
+			   						'seat_number' => $seat->_text,
+				   					'category' => $section->_nbTitle,
 				   					'row' => $seat->_rangeText,
 				   					'auditorium_id' => $auditorium_id,
 				   					'price' => $price_seat,
@@ -3676,8 +3676,8 @@ public function seatTypeChangeSelection($row_id){
 
 			   					$newseat = new Models\Seats;
 			   					$newseat->unique_id = $seat->_id;
-			   					$newseat->name = $seat->_text;
-			   					$newseat->area = $section->_nbTitle;
+			   					$newseat->seat_number = $seat->_text;
+			   					$newseat->category= $section->_nbTitle;
 			   					$newseat->row = $seat->_rangeText;
 			   					$newseat->auditorium_id = $auditorium_id;
 			   					$newseat->price = $price_seat;
@@ -4188,7 +4188,7 @@ public function seatTypeChangeSelection($row_id){
         $event_id = $arg['id'];
 
         //get seats
-        $seats = Models\Seats::select('*')->where('event_id', $event_id)->orderby('area', 'ASC')->get();
+        $seats = Models\Seats::select('*')->where('event_id', $event_id)->orderby('category', 'ASC')->get();
 
         //get event name 
         $event = Models\Event::where('id',$event_id)->first();
