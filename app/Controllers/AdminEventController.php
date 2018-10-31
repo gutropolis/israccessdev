@@ -1820,10 +1820,16 @@ class AdminEventController extends Base
 				
 				 
 				$admin_notes = Models\EventCategoryRowSeat::where('id','=', $laset_insert_id)->first()->admin_notes;
+
+				if($seatType != 'Vendues à autre opérateur'){
+					$note = '<div><input onChange="sendData('.$laset_insert_id.');"type="text" id="admin_nots_span_'.$laset_insert_id.'" value="'.$admin_notes.'"/></div><input type="hidden" id="seat_id_'.$laset_insert_id.'" value="'.$laset_insert_id.'">';
+				}else {
+					$note = '';
+				}
 				 				  		  
 				$seats_list .= '<tr id="tabl_id_row_'.$laset_insert_id.'" >
 					<td>'.$seatCircle.'</td>
-					<td class="'.$td_class.'">'.$seatType.'<div><input onChange="sendData('.$laset_insert_id.');"type="text" id="admin_nots_span_'.$laset_insert_id.'" value="'.$admin_notes.'"/></div><input type="hidden" id="seat_id_'.$laset_insert_id.'" value="'.$laset_insert_id.'"></td>
+					<td class="'.$td_class.'">'.$seatType.$note.'</td>				
 					<td>'.$customer_name.'</td>
 					<td>'.$datetime.'</td>
 					<td>'.$seatPriceVal.'</td>
