@@ -598,8 +598,9 @@ class AdminSellingController extends Base
 						
 			}			
 
-			if ( $select_selling_type == 0)
+			if ( $select_selling_type == 0 || $select_selling_type==2)
 			{
+				$successmsg='';
 				$paymentID = '111';
 				$order_id = $this->confirmOrder($paymentID,$this->userid);
 				if (intval($order_id) > 0)
@@ -609,10 +610,17 @@ class AdminSellingController extends Base
 						{
 							$this->sendTicketInformationEmail($order_id,$this->userid);
 						}
-						
+						if($select_selling_type==2)
+						{
+							$successmsg='La commande de billets gratuits a bien été effectuée !';
+						}
+						else
+						{
+							$successmsg='Paiement réalisé avec succès, la commande a bien été confirmée !';
+						}
 					$jsonData = array(
 						'status' => '1',
-						'msg' => 'Paiement réalisé avec succès, la commande a bien été confirmée !'
+						'msg' =>$successmsg
 					);
 					return $response->withHeader('Content-type', 'application/json')->write(json_encode($jsonData));
 					exit;
@@ -2143,7 +2151,7 @@ class AdminSellingController extends Base
 			
 		}
 	public function getPDFContent($ticketType,$ticket,$msgArr){
-						
+						$sellingtype=$_GET['selling_type'];
 							$pdfContent ='';
 						$msgArr['web_root_path'] = "pdf";
 						
@@ -2239,7 +2247,14 @@ class AdminSellingController extends Base
 																			</table>
 																		</td>
 																	</tr>';
-																	 $message =  file_get_contents(ROOT_PATH.'/pdf/e-ticket.html');  //E-Ticket 
+																	if($sellingtype==2)
+																	{
+																		$message =  file_get_contents(ROOT_PATH.'/pdf/freee-ticket.html');  //E-Ticket 
+																	}
+																	else
+																	{
+																		$message =  file_get_contents(ROOT_PATH.'/pdf/e-ticket.html');  //E-Ticket 
+																	}
 											
 											
 											 
@@ -2287,7 +2302,14 @@ class AdminSellingController extends Base
 																				</tbody></table>
 																			</td>
 																		</tr>';
-											  $message =  file_get_contents(ROOT_PATH.'/pdf/countermark-ticket.html');  //E-Ticket 
+											 						 if($sellingtype==2)
+																	{
+																		$message =  file_get_contents(ROOT_PATH.'/pdf/freecountermark-ticket.html');  //E-Ticket 
+																	}
+																	else
+																	{
+																		$message =  file_get_contents(ROOT_PATH.'/pdf/countermark-ticket.html');  //E-Ticket 
+																	}
 										}
 									
 											$msgArr['seat_management_sidebar'] = $sidecatbar;
