@@ -43,8 +43,8 @@
             {% for seat in seats %}
             <tr class="view" id="show_{{seat.unique_id}}">
                 <td>{{seat.unique_id}}</td>
-                <td>{{seat.name}}</td>
-                <td>{{seat.area}}</td>
+                <td>{{seat.seat_number}}</td>
+                <td>{{seat.category}}</td>
                 <td>{{seat.row}}</td>
                 <td class="seatprice" >{{seat.price}}</td>
                 <td class="seatstatus" >{{seat.status}}</td>
